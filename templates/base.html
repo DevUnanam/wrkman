@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ArtisanConnect - Find & Hire Verified Local Artisans{% endblock %}</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        /* Custom color theme: navy blue, lime green, white */
+        :root {
+            --navy-blue: #1e3a8a;
+            --lime-green: #65a30d;
+            --light-lime: #84cc16;
+        }
+        
+        .bg-navy { background-color: var(--navy-blue); }
+        .bg-lime { background-color: var(--lime-green); }
+        .bg-light-lime { background-color: var(--light-lime); }
+        .text-navy { color: var(--navy-blue); }
+        .text-lime { color: var(--lime-green); }
+        .border-lime { border-color: var(--lime-green); }
+        
+        .star-yellow { color: #fbbf24; }
+        .star-gray { color: #d1d5db; }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#1e3a8a',
+                        lime: '#65a30d',
+                        'light-lime': '#84cc16'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-navy shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="{% url 'core:home' %}" class="flex items-center space-x-2">
+                        <i class="fas fa-hammer text-lime text-2xl"></i>
+                        <span class="text-white text-xl font-bold">ArtisanConnect</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="{% url 'core:home' %}" class="text-white hover:text-lime transition">Home</a>
+                    <a href="{% url 'core:artisan_list' %}" class="text-white hover:text-lime transition">Find Artisans</a>
+                    <a href="{% url 'core:about' %}" class="text-white hover:text-lime transition">About</a>
+                    <a href="{% url 'core:contact' %}" class="text-white hover:text-lime transition">Contact</a>
+                    
+                    {% if user.is_authenticated %}
+                        <div class="relative group">
+                            <button class="text-white hover:text-lime transition flex items-center space-x-1">
+                                <i class="fas fa-user"></i>
+                                <span>{{ user.get_full_name|default:user.username }}</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                            <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <a href="{% url 'accounts:profile' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                                {% if user.is_artisan %}
+                                    <a href="{% url 'accounts:edit_profile' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit Profile</a>
+                                {% endif %}
+                                <a href="{% url 'accounts:logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}" class="text-white hover:text-lime transition">Login</a>
+                        <div class="relative group">
+                            <button class="bg-lime text-white px-4 py-2 rounded-lg hover:bg-light-lime transition flex items-center space-x-1">
+                                <span>Sign Up</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                            <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <a href="{% url 'accounts:client_register' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-user mr-2"></i>As Client
+                                </a>
+                                <a href="{% url 'accounts:artisan_register' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-tools mr-2"></i>As Artisan
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-white hover:text-lime">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-navy border-t border-lime">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="{% url 'core:home' %}" class="text-white block px-3 py-2 hover:text-lime">Home</a>
+                <a href="{% url 'core:artisan_list' %}" class="text-white block px-3 py-2 hover:text-lime">Find Artisans</a>
+                <a href="{% url 'core:about' %}" class="text-white block px-3 py-2 hover:text-lime">About</a>
+                <a href="{% url 'core:contact' %}" class="text-white block px-3 py-2 hover:text-lime">Contact</a>
+                
+                {% if user.is_authenticated %}
+                    <a href="{% url 'accounts:profile' %}" class="text-white block px-3 py-2 hover:text-lime">Profile</a>
+                    <a href="{% url 'accounts:logout' %}" class="text-white block px-3 py-2 hover:text-lime">Logout</a>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}" class="text-white block px-3 py-2 hover:text-lime">Login</a>
+                    <a href="{% url 'accounts:client_register' %}" class="text-white block px-3 py-2 hover:text-lime">Sign Up as Client</a>
+                    <a href="{% url 'accounts:artisan_register' %}" class="text-white block px-3 py-2 hover:text-lime">Sign Up as Artisan</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Messages -->
+    {% if messages %}
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} bg-{% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% else %}blue{% endif %}-100 border border-{% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% else %}blue{% endif %}-400 text-{% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% else %}blue{% endif %}-700 px-4 py-3 rounded mb-4">
+                    {{ message }}
+                    <button onclick="this.parentElement.remove()" class="float-right text-xl leading-none font-semibold">&times;</button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-navy text-white mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-hammer text-lime text-2xl"></i>
+                        <span class="text-white text-xl font-bold">ArtisanConnect</span>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Connecting clients with verified local artisans. 
+                        Find trusted professionals for all your service needs.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-lime"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-lime"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-lime"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-lime"><i class="fab fa-linkedin text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'core:home' %}" class="text-gray-300 hover:text-lime">Home</a></li>
+                        <li><a href="{% url 'core:artisan_list' %}" class="text-gray-300 hover:text-lime">Find Artisans</a></li>
+                        <li><a href="{% url 'core:about' %}" class="text-gray-300 hover:text-lime">About Us</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="text-gray-300 hover:text-lime">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">For Artisans</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'accounts:artisan_register' %}" class="text-gray-300 hover:text-lime">Join as Artisan</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-lime">How it Works</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-lime">Success Stories</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-lime">Help Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-300">
+                    &copy; 2023 ArtisanConnect. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Auto-hide messages after 5 seconds
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                alert.remove();
+            });
+        }, 5000);
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

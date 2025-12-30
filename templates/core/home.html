@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - ArtisanConnect{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-navy to-blue-800 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h1 class="text-4xl lg:text-6xl font-bold mb-6">
+                    Find & Hire 
+                    <span class="text-lime">Verified</span>
+                    Local Artisans
+                </h1>
+                <p class="text-xl lg:text-2xl mb-8 text-gray-200">
+                    Connect with trusted professionals for plumbing, electrical work, 
+                    hairdressing, mechanics, home tutoring, and more.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{% url 'core:artisan_list' %}" class="bg-lime text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-light-lime transition inline-flex items-center justify-center">
+                        <i class="fas fa-search mr-2"></i>
+                        Find Artisans
+                    </a>
+                    <a href="{% url 'accounts:artisan_register' %}" class="border-2 border-white text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-navy transition inline-flex items-center justify-center">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Join as Artisan
+                    </a>
+                </div>
+            </div>
+            
+            <div class="relative">
+                <div class="bg-white rounded-lg p-6 shadow-2xl">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <span class="text-navy font-semibold">{{ total_artisans }}+ Verified Artisans</span>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-tools text-lime mr-2"></i>
+                        <span class="text-navy font-semibold">{{ total_categories }}+ Service Categories</span>
+                    </div>
+                    <div class="text-navy">
+                        <h3 class="font-bold text-lg mb-2">Why Choose Us?</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-lime mr-2"></i>
+                                <span>Verified & Background Checked</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-lime mr-2"></i>
+                                <span>Local Professionals</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-lime mr-2"></i>
+                                <span>Competitive Prices</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-navy mb-4">What service do you need?</h2>
+            <p class="text-gray-600">Search for artisans by service category or location</p>
+        </div>
+        
+        <form action="{% url 'core:artisan_list' %}" method="get" class="bg-gray-50 rounded-lg p-6 shadow-lg">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <input type="text" name="search" placeholder="What service do you need?" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent">
+                </div>
+                <div>
+                    <select name="category" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent">
+                        <option value="">All Categories</option>
+                        {% for category in featured_categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <select name="state" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent">
+                        <option value="">All States</option>
+                        <!-- States will be populated here -->
+                    </select>
+                </div>
+                <div>
+                    <button type="submit" class="w-full bg-lime text-white px-6 py-3 rounded-lg font-semibold hover:bg-light-lime transition">
+                        <i class="fas fa-search mr-2"></i>
+                        Search
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Featured Categories -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy mb-4">Popular Services</h2>
+            <p class="text-gray-600">Browse our most requested service categories</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for category in featured_categories %}
+            <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6 text-center">
+                <div class="bg-lime bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas {{ category.icon|default:'fa-tools' }} text-lime text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-navy mb-2">{{ category.name }}</h3>
+                <p class="text-gray-600 mb-4">{{ category.description|truncatewords:15 }}</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-500">{{ category.artisan_count }} artisans</span>
+                    <a href="{% url 'core:artisan_list' %}?category={{ category.id }}" 
+                       class="text-lime hover:text-light-lime font-medium">
+                        Browse <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="{% url 'core:artisan_list' %}" 
+               class="bg-navy text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition inline-flex items-center">
+                View All Categories
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Top Rated Artisans -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy mb-4">Top Rated Artisans</h2>
+            <p class="text-gray-600">Meet our highest-rated professionals</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {% for artisan in top_artisans %}
+            <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition overflow-hidden">
+                <div class="relative">
+                    {% if artisan.user.profile_picture %}
+                        <img src="{{ artisan.user.profile_picture.url }}" 
+                             alt="{{ artisan.user.get_full_name }}"
+                             class="w-full h-48 object-cover">
+                    {% else %}
+                        <div class="w-full h-48 bg-gradient-to-br from-lime to-light-lime flex items-center justify-center">
+                            <i class="fas fa-user text-white text-4xl"></i>
+                        </div>
+                    {% endif %}
+                    
+                    {% if artisan.is_verified %}
+                        <div class="absolute top-2 right-2 bg-lime text-white px-2 py-1 rounded-full text-xs">
+                            <i class="fas fa-check mr-1"></i>Verified
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="p-4">
+                    <h3 class="font-semibold text-navy mb-1">{{ artisan.user.get_full_name }}</h3>
+                    <p class="text-sm text-gray-600 mb-2">{{ artisan.category.name }}</p>
+                    
+                    <div class="flex items-center mb-2">
+                        <div class="flex items-center mr-2">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= artisan.average_rating %}
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                {% else %}
+                                    <i class="far fa-star text-gray-300 text-sm"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <span class="text-sm text-gray-600">({{ artisan.review_count }})</span>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <span class="text-lime font-semibold">₦{{ artisan.hourly_rate }}/hr</span>
+                        <a href="{% url 'core:artisan_detail' artisan.pk %}" 
+                           class="text-navy hover:text-lime text-sm font-medium">
+                            View Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Recent Reviews -->
+{% if recent_reviews %}
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy mb-4">What Our Clients Say</h2>
+            <p class="text-gray-600">Real reviews from satisfied customers</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for review in recent_reviews %}
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center mb-4">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}
+                            <i class="fas fa-star text-yellow-400"></i>
+                        {% else %}
+                            <i class="far fa-star text-gray-300"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                
+                {% if review.title %}
+                    <h4 class="font-semibold text-navy mb-2">{{ review.title }}</h4>
+                {% endif %}
+                
+                <p class="text-gray-600 mb-4">{{ review.comment|truncatewords:20 }}</p>
+                
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-user text-gray-600"></i>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-900">{{ review.client.get_full_name|default:review.client.username }}</p>
+                        <p class="text-sm text-gray-500">for {{ review.artisan.user.get_full_name }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Call to Action -->
+<section class="py-16 bg-navy">
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-white mb-4">Ready to Get Started?</h2>
+        <p class="text-xl text-gray-200 mb-8">
+            Join thousands of satisfied clients who found their perfect artisan through our platform
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'core:artisan_list' %}" 
+               class="bg-lime text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-light-lime transition">
+                Find an Artisan Now
+            </a>
+            <a href="{% url 'accounts:artisan_register' %}" 
+               class="border-2 border-white text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-navy transition">
+                Become an Artisan
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
