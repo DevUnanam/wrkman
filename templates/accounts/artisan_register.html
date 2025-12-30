@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+
+{% block title %}Artisan Registration - ArtisanConnect{% endblock %}
+
+{% block content %}
+<section class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-8">
+            <div class="flex justify-center mb-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-hammer text-lime text-3xl"></i>
+                    <span class="text-navy text-2xl font-bold">ArtisanConnect</span>
+                </div>
+            </div>
+            <h2 class="text-3xl font-extrabold text-navy">
+                Join as an Artisan
+            </h2>
+            <p class="mt-2 text-gray-600">
+                Complete your profile to start receiving job requests
+            </p>
+            <p class="text-sm text-gray-500">
+                Already have an account?
+                <a href="{% url 'accounts:login' %}" class="font-medium text-lime hover:text-light-lime">
+                    Sign in here
+                </a>
+            </p>
+        </div>
+        
+        <div class="bg-white shadow-lg rounded-lg p-8">
+            {% if form.errors %}
+                <div class="rounded-md bg-red-50 p-4 mb-6">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-exclamation-circle text-red-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-red-800">
+                                Please correct the following errors:
+                            </h3>
+                            <div class="mt-2 text-sm text-red-700">
+                                <ul class="list-disc pl-5 space-y-1">
+                                    {% for field, errors in form.errors.items %}
+                                        {% for error in errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <!-- Personal Information -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-navy mb-4 border-b border-gray-200 pb-2">
+                        <i class="fas fa-user mr-2"></i>Personal Information
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="id_first_name" class="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div>
+                            <label for="id_last_name" class="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
+                            {{ form.last_name }}
+                        </div>
+                        <div>
+                            <label for="id_username" class="block text-sm font-medium text-gray-700 mb-1">Username *</label>
+                            {{ form.username }}
+                        </div>
+                        <div>
+                            <label for="id_email" class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="id_phone_number" class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                            {{ form.phone_number }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Information -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-navy mb-4 border-b border-gray-200 pb-2">
+                        <i class="fas fa-tools mr-2"></i>Professional Information
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Service Category *</label>
+                            <select name="category" id="category" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                                <option value="">Select a category</option>
+                                {% for category in categories %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="hourly_rate" class="block text-sm font-medium text-gray-700 mb-1">Hourly Rate (₦) *</label>
+                            <input type="number" name="hourly_rate" id="hourly_rate" required min="100" step="50"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+                                   placeholder="e.g., 2500">
+                        </div>
+                        <div>
+                            <label for="years_experience" class="block text-sm font-medium text-gray-700 mb-1">Years of Experience</label>
+                            <input type="number" name="years_experience" id="years_experience" min="0" max="50"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+                                   placeholder="e.g., 5">
+                        </div>
+                        <div>
+                            <label for="skills" class="block text-sm font-medium text-gray-700 mb-1">Skills</label>
+                            <select name="skills" id="skills" multiple
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+                                    style="min-height: 80px;">
+                                <!-- Skills will be populated via JavaScript based on category selection -->
+                            </select>
+                            <p class="text-xs text-gray-500 mt-1">Hold Ctrl (Cmd on Mac) to select multiple skills</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <label for="bio" class="block text-sm font-medium text-gray-700 mb-1">Bio / Description *</label>
+                        <textarea name="bio" id="bio" rows="4" required
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+                                  placeholder="Tell potential clients about yourself, your experience, and the services you provide..."></textarea>
+                        <p class="text-xs text-gray-500 mt-1">Minimum 50 characters</p>
+                    </div>
+                </div>
+
+                <!-- Location Information -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-navy mb-4 border-b border-gray-200 pb-2">
+                        <i class="fas fa-map-marker-alt mr-2"></i>Location
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="state" class="block text-sm font-medium text-gray-700 mb-1">State *</label>
+                            <select name="state" id="state" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                                <option value="">Select a state</option>
+                                {% for state in states %}
+                                    <option value="{{ state.id }}">{{ state.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="city" class="block text-sm font-medium text-gray-700 mb-1">City *</label>
+                            <select name="city" id="city" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                                <option value="">Select a city</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Security -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-navy mb-4 border-b border-gray-200 pb-2">
+                        <i class="fas fa-lock mr-2"></i>Account Security
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="id_password1" class="block text-sm font-medium text-gray-700 mb-1">Password *</label>
+                            {{ form.password1 }}
+                        </div>
+                        <div>
+                            <label for="id_password2" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password *</label>
+                            {{ form.password2 }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms and Submit -->
+                <div class="border-t border-gray-200 pt-6">
+                    <div class="flex items-start mb-4">
+                        <input type="checkbox" id="terms" required
+                               class="h-4 w-4 text-lime focus:ring-lime border-gray-300 rounded mt-1">
+                        <label for="terms" class="ml-2 text-sm text-gray-700">
+                            I agree to the <a href="#" class="text-lime hover:text-light-lime">Terms of Service</a> 
+                            and <a href="#" class="text-lime hover:text-light-lime">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <div class="bg-blue-50 border border-blue-200 rounded-md p-4 mb-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-info-circle text-blue-400"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-blue-800">
+                                    <strong>Account Approval:</strong> Your artisan account will be reviewed by our team. 
+                                    You'll receive an email notification once approved. This process usually takes 1-2 business days.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" 
+                            class="w-full bg-lime text-white py-3 px-6 rounded-lg font-semibold hover:bg-light-lime transition duration-200 flex items-center justify-center">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Submit Artisan Application
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+// Load cities when state is selected
+document.getElementById('state').addEventListener('change', function() {
+    const stateId = this.value;
+    const citySelect = document.getElementById('city');
+    
+    // Clear current cities
+    citySelect.innerHTML = '<option value="">Select a city</option>';
+    
+    if (stateId) {
+        fetch(`/accounts/ajax/cities/?state_id=${stateId}`)
+            .then(response => response.json())
+            .then(cities => {
+                cities.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city.id;
+                    option.textContent = city.name;
+                    citySelect.appendChild(option);
+                });
+            });
+    }
+});
+
+// Load skills when category is selected
+document.getElementById('category').addEventListener('change', function() {
+    const categoryId = this.value;
+    const skillsSelect = document.getElementById('skills');
+    
+    // Clear current skills
+    skillsSelect.innerHTML = '';
+    
+    if (categoryId) {
+        // You can implement this endpoint to load skills by category
+        // For now, we'll keep it simple
+        fetch(`/artisans/ajax/skills/?category_id=${categoryId}`)
+            .then(response => response.json())
+            .then(skills => {
+                skills.forEach(skill => {
+                    const option = document.createElement('option');
+                    option.value = skill.id;
+                    option.textContent = skill.name;
+                    skillsSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.log('Skills endpoint not implemented yet');
+            });
+    }
+});
+
+// Bio character validation
+document.getElementById('bio').addEventListener('input', function() {
+    const bio = this.value;
+    const helpText = this.parentNode.querySelector('.text-xs');
+    
+    if (bio.length < 50) {
+        helpText.textContent = `Minimum 50 characters (${bio.length}/50)`;
+        helpText.className = 'text-xs text-red-500 mt-1';
+    } else {
+        helpText.textContent = `${bio.length} characters`;
+        helpText.className = 'text-xs text-green-500 mt-1';
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ artisan.user.get_full_name }} - ArtisanConnect{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-navy to-blue-800 px-8 py-12">
+            <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+                {% if artisan.user.profile_picture %}
+                    <img src="{{ artisan.user.profile_picture.url }}" alt="{{ artisan.user.get_full_name }}"
+                         class="w-32 h-32 rounded-full border-4 border-white object-cover">
+                {% else %}
+                    <div class="w-32 h-32 rounded-full border-4 border-white bg-lime flex items-center justify-center">
+                        <i class="fas fa-user text-white text-4xl"></i>
+                    </div>
+                {% endif %}
+                
+                <div class="text-white text-center md:text-left flex-1">
+                    <h1 class="text-3xl font-bold mb-2">{{ artisan.user.get_full_name }}</h1>
+                    <p class="text-xl text-blue-200 mb-3">{{ artisan.category.name }} Professional</p>
+                    <div class="flex flex-wrap justify-center md:justify-start items-center space-x-4 text-sm">
+                        {% if artisan.is_verified %}
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-lime text-white">
+                                <i class="fas fa-check mr-1"></i>Verified
+                            </span>
+                        {% endif %}
+                        <span class="text-blue-200">
+                            <i class="fas fa-map-marker-alt mr-1"></i>{{ artisan.city.name }}, {{ artisan.state.name }}
+                        </span>
+                        <span class="text-blue-200">
+                            <i class="fas fa-briefcase mr-1"></i>{{ artisan.years_of_experience }} years experience
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="text-center md:text-right text-white">
+                    <div class="text-2xl font-bold">₦{{ artisan.hourly_rate }}/hr</div>
+                    <div class="text-sm text-blue-200 mb-3">Starting rate</div>
+                    <div class="space-y-2">
+                        <button class="bg-lime hover:bg-light-lime text-white px-6 py-2 rounded-lg font-semibold transition w-full">
+                            <i class="fas fa-phone mr-2"></i>Contact
+                        </button>
+                        {% if user.is_authenticated and user.is_client and can_review %}
+                            <a href="{% url 'reviews:add_review' artisan.pk %}" 
+                               class="block bg-white text-navy hover:bg-gray-100 px-6 py-2 rounded-lg font-semibold transition">
+                                <i class="fas fa-star mr-2"></i>Write Review
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="p-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Main Content -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- About -->
+                    <div>
+                        <h2 class="text-xl font-semibold text-navy mb-4">About</h2>
+                        <p class="text-gray-700 leading-relaxed">{{ artisan.bio }}</p>
+                    </div>
+                    
+                    <!-- Skills -->
+                    {% if skills %}
+                    <div>
+                        <h2 class="text-xl font-semibold text-navy mb-4">Skills & Services</h2>
+                        <div class="flex flex-wrap gap-2">
+                            {% for skill in skills %}
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                                    {{ skill.name }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Gallery -->
+                    {% if gallery_images %}
+                    <div>
+                        <h2 class="text-xl font-semibold text-navy mb-4">Work Gallery</h2>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            {% for image in gallery_images %}
+                                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden">
+                                    <img src="{{ image.image.url }}" alt="{{ image.title }}" 
+                                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-200">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Reviews -->
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-semibold text-navy">Reviews ({{ reviews.paginator.count }})</h2>
+                            {% if reviews.paginator.count > 0 %}
+                                <a href="{% url 'reviews:review_list' artisan.pk %}" 
+                                   class="text-lime hover:text-light-lime font-medium">
+                                    View All Reviews
+                                </a>
+                            {% endif %}
+                        </div>
+                        
+                        {% if reviews %}
+                            <div class="space-y-6">
+                                {% for review in reviews %}
+                                    <div class="border border-gray-200 rounded-lg p-6">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+                                                    <i class="fas fa-user text-gray-600"></i>
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-medium text-gray-900">{{ review.client.get_full_name|default:review.client.username }}</h4>
+                                                    <div class="flex items-center">
+                                                        {% for i in "12345" %}
+                                                            {% if forloop.counter <= review.rating %}
+                                                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                                            {% else %}
+                                                                <i class="far fa-star text-gray-300 text-sm"></i>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="text-sm text-gray-500">{{ review.created_at|date:"M d, Y" }}</span>
+                                        </div>
+                                        
+                                        {% if review.title %}
+                                            <h4 class="font-semibold text-gray-900 mb-2">{{ review.title }}</h4>
+                                        {% endif %}
+                                        
+                                        <p class="text-gray-700 mb-3">{{ review.comment }}</p>
+                                        
+                                        {% if review.would_recommend %}
+                                            <div class="flex items-center text-lime text-sm">
+                                                <i class="fas fa-thumbs-up mr-2"></i>
+                                                Recommends this artisan
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-12 bg-gray-50 rounded-lg">
+                                <i class="fas fa-star text-gray-300 text-4xl mb-4"></i>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">No reviews yet</h3>
+                                <p class="text-gray-600">Be the first to review this artisan!</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Quick Stats -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-navy mb-4">Quick Stats</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Average Rating</span>
+                                <div class="flex items-center">
+                                    <span class="font-semibold text-navy mr-1">{{ artisan.average_rating }}</span>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                </div>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Total Reviews</span>
+                                <span class="font-semibold text-navy">{{ artisan.total_reviews }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Profile Views</span>
+                                <span class="font-semibold text-navy">{{ artisan.profile_views }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Member Since</span>
+                                <span class="font-semibold text-navy">{{ artisan.user.date_joined|date:"Y" }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Availability</span>
+                                <span class="font-semibold {% if artisan.availability == 'available' %}text-lime{% elif artisan.availability == 'busy' %}text-yellow-600{% else %}text-red-600{% endif %}">
+                                    {{ artisan.get_availability_display }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Info -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-navy mb-4">Location & Contact</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-map-marker-alt text-lime mr-3"></i>
+                                <span>{{ artisan.city.name }}, {{ artisan.state.name }}</span>
+                            </div>
+                            {% if artisan.user.phone_number %}
+                                <div class="flex items-center text-gray-700">
+                                    <i class="fas fa-phone text-lime mr-3"></i>
+                                    <span>{{ artisan.user.phone_number }}</span>
+                                </div>
+                            {% endif %}
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-envelope text-lime mr-3"></i>
+                                <span>Contact via platform</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Related Artisans -->
+                    {% if related_artisans %}
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-navy mb-4">Similar Artisans</h3>
+                        <div class="space-y-4">
+                            {% for related in related_artisans %}
+                                <div class="flex items-center space-x-3">
+                                    {% if related.user.profile_picture %}
+                                        <img src="{{ related.user.profile_picture.url }}" 
+                                             alt="{{ related.user.get_full_name }}"
+                                             class="w-12 h-12 rounded-full object-cover">
+                                    {% else %}
+                                        <div class="w-12 h-12 rounded-full bg-lime flex items-center justify-center">
+                                            <i class="fas fa-user text-white"></i>
+                                        </div>
+                                    {% endif %}
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-900">{{ related.user.get_full_name }}</h4>
+                                        <div class="flex items-center">
+                                            <div class="flex items-center mr-2">
+                                                {% for i in "12345" %}
+                                                    {% if forloop.counter <= related.avg_rating %}
+                                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                                    {% else %}
+                                                        <i class="far fa-star text-gray-300 text-xs"></i>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            <span class="text-xs text-gray-600">₦{{ related.hourly_rate }}/hr</span>
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'core:artisan_detail' related.pk %}" 
+                                       class="text-lime hover:text-light-lime text-sm">
+                                        View
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

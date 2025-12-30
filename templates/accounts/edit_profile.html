@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile - ArtisanConnect{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="bg-white shadow-lg rounded-lg p-8">
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-navy">Edit Profile</h1>
+            <p class="text-gray-600">Update your personal information</p>
+        </div>
+        
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            
+            <!-- Personal Information -->
+            <div>
+                <h3 class="text-lg font-semibold text-navy mb-4">Personal Information</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                        <input type="text" name="first_name" id="first_name" 
+                               value="{{ user.first_name }}"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                        <input type="text" name="last_name" id="last_name" 
+                               value="{{ user.last_name }}"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" name="email" id="email" 
+                               value="{{ user.email }}"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="phone_number" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                        <input type="text" name="phone_number" id="phone_number" 
+                               value="{{ user.phone_number|default:'' }}"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <label for="profile_picture" class="block text-sm font-medium text-gray-700 mb-1">Profile Picture</label>
+                    <input type="file" name="profile_picture" id="profile_picture" accept="image/*"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                    {% if user.profile_picture %}
+                        <div class="mt-2">
+                            <img src="{{ user.profile_picture.url }}" alt="Current profile picture" 
+                                 class="w-20 h-20 rounded-full object-cover">
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            {% if user.is_artisan and artisan %}
+                <!-- Artisan-specific fields -->
+                <div>
+                    <h3 class="text-lg font-semibold text-navy mb-4">Professional Information</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="bio" class="block text-sm font-medium text-gray-700 mb-1">Bio</label>
+                            <textarea name="bio" id="bio" rows="4"
+                                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">{{ artisan.bio }}</textarea>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="hourly_rate" class="block text-sm font-medium text-gray-700 mb-1">Hourly Rate (₦)</label>
+                                <input type="number" name="hourly_rate" id="hourly_rate" step="0.01" min="0"
+                                       value="{{ artisan.hourly_rate }}"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="years_experience" class="block text-sm font-medium text-gray-700 mb-1">Years of Experience</label>
+                                <input type="number" name="years_experience" id="years_experience" min="0" max="50"
+                                       value="{{ artisan.years_of_experience }}"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="state" class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                                <select name="state" id="state"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                                    {% for state in states %}
+                                        <option value="{{ state.id }}" {% if state.id == artisan.state.id %}selected{% endif %}>
+                                            {{ state.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <label for="city" class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                                <select name="city" id="city"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                                    {% for city in cities %}
+                                        <option value="{{ city.id }}" {% if city.id == artisan.city.id %}selected{% endif %}>
+                                            {{ city.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="availability" class="block text-sm font-medium text-gray-700 mb-1">Availability</label>
+                            <select name="availability" id="availability"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-transparent">
+                                <option value="available" {% if artisan.availability == 'available' %}selected{% endif %}>Available</option>
+                                <option value="busy" {% if artisan.availability == 'busy' %}selected{% endif %}>Busy</option>
+                                <option value="unavailable" {% if artisan.availability == 'unavailable' %}selected{% endif %}>Unavailable</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            
+            <div class="flex justify-between pt-6 border-t border-gray-200">
+                <a href="{% url 'accounts:profile' %}" 
+                   class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition">
+                    Cancel
+                </a>
+                <button type="submit" 
+                        class="bg-lime text-white px-6 py-2 rounded-lg hover:bg-light-lime transition">
+                    Update Profile
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

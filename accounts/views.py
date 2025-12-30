@@ -167,6 +167,7 @@ def edit_profile_view(request):
 
 def get_cities_ajax(request):
     """AJAX view to get cities for a state"""
+    from django.http import JsonResponse
     state_id = request.GET.get('state_id')
     if state_id:
         cities = City.objects.filter(state_id=state_id).values('id', 'name')
