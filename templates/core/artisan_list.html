@@ -1,0 +1,320 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Find Artisans - ArtisanConnect{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-navy mb-4">Find Local Artisans</h1>
+        <p class="text-lg text-gray-600">Discover skilled professionals in your area</p>
+        <p class="text-sm text-gray-500 mt-2">{{ total_results }} artisan{{ total_results|pluralize }} found</p>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <form method="GET" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Search Input -->
+                <div class="col-span-full lg:col-span-1">
+                    <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                    <input 
+                        type="text" 
+                        name="search" 
+                        id="search"
+                        value="{{ search_query }}"
+                        placeholder="Name, skill, or service..."
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent"
+                    >
+                </div>
+
+                <!-- Category Filter -->
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <select name="category" id="category" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent">
+                        <option value="">All Categories</option>
+                        {% for cat in categories %}
+                            <option value="{{ cat.id }}" {% if cat.id|stringformat:"s" == category_id %}selected{% endif %}>
+                                {{ cat.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- State Filter -->
+                <div>
+                    <label for="state" class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                    <select name="state" id="state" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent">
+                        <option value="">All States</option>
+                        {% for state in states %}
+                            <option value="{{ state.id }}" {% if state.id|stringformat:"s" == state_id %}selected{% endif %}>
+                                {{ state.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- City Filter -->
+                <div>
+                    <label for="city" class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <select name="city" id="city" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent">
+                        <option value="">All Cities</option>
+                        {% for city in cities %}
+                            <option value="{{ city.id }}" {% if city.id|stringformat:"s" == city_id %}selected{% endif %}>
+                                {{ city.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <!-- Price Range -->
+                <div>
+                    <label for="min_rate" class="block text-sm font-medium text-gray-700 mb-1">Min Rate (₦/hour)</label>
+                    <input 
+                        type="number" 
+                        name="min_rate" 
+                        id="min_rate"
+                        value="{{ min_rate }}"
+                        placeholder="0"
+                        min="0"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent"
+                    >
+                </div>
+
+                <div>
+                    <label for="max_rate" class="block text-sm font-medium text-gray-700 mb-1">Max Rate (₦/hour)</label>
+                    <input 
+                        type="number" 
+                        name="max_rate" 
+                        id="max_rate"
+                        value="{{ max_rate }}"
+                        placeholder="10000"
+                        min="0"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent"
+                    >
+                </div>
+
+                <!-- Rating Filter -->
+                <div>
+                    <label for="min_rating" class="block text-sm font-medium text-gray-700 mb-1">Min Rating</label>
+                    <select name="min_rating" id="min_rating" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent">
+                        <option value="">Any Rating</option>
+                        <option value="1" {% if min_rating == "1" %}selected{% endif %}>1+ Stars</option>
+                        <option value="2" {% if min_rating == "2" %}selected{% endif %}>2+ Stars</option>
+                        <option value="3" {% if min_rating == "3" %}selected{% endif %}>3+ Stars</option>
+                        <option value="4" {% if min_rating == "4" %}selected{% endif %}>4+ Stars</option>
+                        <option value="5" {% if min_rating == "5" %}selected{% endif %}>5 Stars</option>
+                    </select>
+                </div>
+
+                <!-- Sort By -->
+                <div>
+                    <label for="sort_by" class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+                    <select name="sort_by" id="sort_by" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lime focus:border-transparent">
+                        <option value="newest" {% if sort_by == "newest" %}selected{% endif %}>Newest</option>
+                        <option value="rating" {% if sort_by == "rating" %}selected{% endif %}>Highest Rated</option>
+                        <option value="price_low" {% if sort_by == "price_low" %}selected{% endif %}>Price: Low to High</option>
+                        <option value="price_high" {% if sort_by == "price_high" %}selected{% endif %}>Price: High to Low</option>
+                    </select>
+                </div>
+
+                <!-- Search Button -->
+                <div class="flex items-end">
+                    <button 
+                        type="submit" 
+                        class="w-full bg-lime text-white font-medium py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-200"
+                    >
+                        <i class="fas fa-search mr-2"></i>Search
+                    </button>
+                </div>
+            </div>
+
+            <!-- Verified Only Checkbox -->
+            <div class="flex items-center">
+                <input 
+                    type="checkbox" 
+                    name="verified_only" 
+                    id="verified_only"
+                    value="1"
+                    {% if verified_only %}checked{% endif %}
+                    class="h-4 w-4 text-lime focus:ring-lime border-gray-300 rounded"
+                >
+                <label for="verified_only" class="ml-2 text-sm text-gray-700">
+                    Show verified artisans only
+                    <i class="fas fa-shield-alt text-lime ml-1"></i>
+                </label>
+            </div>
+        </form>
+    </div>
+
+    <!-- Results Section -->
+    {% if artisans %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+            {% for artisan in artisans %}
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-200">
+                    <!-- Profile Image -->
+                    <div class="relative">
+                        {% if artisan.profile_image %}
+                            <img src="{{ artisan.profile_image.url }}" alt="{{ artisan.user.get_full_name }}" 
+                                 class="w-full h-48 object-cover">
+                        {% else %}
+                            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                                <i class="fas fa-user text-gray-400 text-4xl"></i>
+                            </div>
+                        {% endif %}
+                        
+                        <!-- Availability Badge -->
+                        {% if artisan.availability == 'available' %}
+                            <span class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                                Available
+                            </span>
+                        {% elif artisan.availability == 'busy' %}
+                            <span class="absolute top-2 right-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full">
+                                Busy
+                            </span>
+                        {% else %}
+                            <span class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                                Unavailable
+                            </span>
+                        {% endif %}
+
+                        <!-- Verified Badge -->
+                        {% if artisan.is_verified %}
+                            <span class="absolute top-2 left-2 bg-lime text-white text-xs px-2 py-1 rounded-full">
+                                <i class="fas fa-shield-alt mr-1"></i>Verified
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Card Content -->
+                    <div class="p-4">
+                        <!-- Name and Category -->
+                        <h3 class="text-lg font-semibold text-gray-900 mb-1">
+                            {{ artisan.user.get_full_name }}
+                        </h3>
+                        <p class="text-sm text-lime font-medium mb-2">{{ artisan.category.name }}</p>
+
+                        <!-- Location -->
+                        <p class="text-sm text-gray-600 mb-2">
+                            <i class="fas fa-map-marker-alt mr-1"></i>
+                            {{ artisan.city.name }}, {{ artisan.state.name }}
+                        </p>
+
+                        <!-- Rating -->
+                        <div class="flex items-center mb-2">
+                            {% if artisan.avg_rating %}
+                                <div class="flex text-yellow-400">
+                                    {% for i in "12345"|make_list %}
+                                        {% if forloop.counter <= artisan.avg_rating|floatformat:0|add:0 %}
+                                            <i class="fas fa-star"></i>
+                                        {% else %}
+                                            <i class="far fa-star"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">
+                                    {{ artisan.avg_rating|floatformat:1 }} ({{ artisan.review_count }})
+                                </span>
+                            {% else %}
+                                <span class="text-sm text-gray-500">No reviews yet</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Hourly Rate -->
+                        <p class="text-lg font-bold text-navy mb-3">
+                            ₦{{ artisan.hourly_rate|floatformat:0 }}/hr
+                        </p>
+
+                        <!-- Bio Preview -->
+                        <p class="text-sm text-gray-600 mb-4 line-clamp-2">
+                            {{ artisan.bio|truncatewords:20 }}
+                        </p>
+
+                        <!-- View Profile Button -->
+                        <a href="{% url 'core:artisan_detail' artisan.pk %}" 
+                           class="block w-full bg-navy text-white text-center py-2 rounded-md hover:bg-blue-800 transition duration-200">
+                            View Profile
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if artisans.has_other_pages %}
+            <div class="flex justify-center">
+                <nav class="flex space-x-2">
+                    {% if artisans.has_previous %}
+                        <a href="?{{ request.GET.urlencode }}&page={{ artisans.previous_page_number }}" 
+                           class="px-3 py-2 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                            Previous
+                        </a>
+                    {% endif %}
+
+                    {% for num in artisans.paginator.page_range %}
+                        {% if artisans.number == num %}
+                            <span class="px-3 py-2 text-sm text-white bg-lime border border-lime rounded-md">
+                                {{ num }}
+                            </span>
+                        {% elif num > artisans.number|add:'-3' and num < artisans.number|add:'3' %}
+                            <a href="?{{ request.GET.urlencode }}&page={{ num }}" 
+                               class="px-3 py-2 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                                {{ num }}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if artisans.has_next %}
+                        <a href="?{{ request.GET.urlencode }}&page={{ artisans.next_page_number }}" 
+                           class="px-3 py-2 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                            Next
+                        </a>
+                    {% endif %}
+                </nav>
+            </div>
+        {% endif %}
+
+    {% else %}
+        <!-- No Results -->
+        <div class="text-center py-12">
+            <i class="fas fa-search text-gray-300 text-6xl mb-4"></i>
+            <h3 class="text-xl font-semibold text-gray-600 mb-2">No artisans found</h3>
+            <p class="text-gray-500 mb-6">Try adjusting your search criteria or filters</p>
+            <a href="{% url 'core:artisan_list' %}" 
+               class="inline-block bg-lime text-white px-6 py-3 rounded-md hover:bg-green-700 transition duration-200">
+                Clear All Filters
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    // Dynamic city filtering based on state selection
+    document.getElementById('state').addEventListener('change', function() {
+        const stateId = this.value;
+        const citySelect = document.getElementById('city');
+        
+        // Clear current city options
+        citySelect.innerHTML = '<option value="">All Cities</option>';
+        
+        if (stateId) {
+            // Filter cities based on selected state
+            {% for city in cities %}
+                if ('{{ city.state.id }}' === stateId) {
+                    const option = new Option('{{ city.name }}', '{{ city.id }}');
+                    citySelect.add(option);
+                }
+            {% endfor %}
+        } else {
+            // Add all cities if no state selected
+            {% for city in cities %}
+                const option = new Option('{{ city.name }}', '{{ city.id }}');
+                citySelect.add(option);
+            {% endfor %}
+        }
+    });
+</script>
+{% endblock %}
