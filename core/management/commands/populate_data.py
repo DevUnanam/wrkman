@@ -26,19 +26,92 @@ class Command(BaseCommand):
             )
             self.stdout.write(self.style.SUCCESS('Created superuser: admin/admin123'))
         
-        # Create sample states and cities
+        # Create all 36 Nigerian states and FCT with major cities
         states_cities = {
-            'Lagos': ['Ikeja', 'Victoria Island', 'Ikoyi', 'Lekki', 'Surulere', 'Yaba'],
-            'Abuja': ['Garki', 'Maitama', 'Wuse', 'Gwarinpa', 'Kubwa', 'Asokoro'],
-            'Kano': ['Kano Municipal', 'Fagge', 'Dala', 'Gwale', 'Nassarawa', 'Tarauni'],
-            'Rivers': ['Port Harcourt', 'Obio-Akpor', 'Okrika', 'Eleme', 'Ikwerre', 'Oyigbo'],
-            'Oyo': ['Ibadan North', 'Ibadan South-West', 'Egbeda', 'Akinyele', 'Lagelu', 'Oluyole']
+            'Abia': ['Umuahia', 'Aba', 'Arochukwu', 'Ohafia', 'Ikwuano'],
+            'Adamawa': ['Yola', 'Mubi', 'Numan', 'Jimeta', 'Ganye'],
+            'Akwa Ibom': ['Uyo', 'Ikot Ekpene', 'Oron', 'Eket', 'Abak'],
+            'Anambra': ['Awka', 'Onitsha', 'Nnewi', 'Ekwulobia', 'Ihiala'],
+            'Bauchi': ['Bauchi', 'Azare', 'Jama\'are', 'Misau', 'Katagum'],
+            'Bayelsa': ['Yenagoa', 'Sagbama', 'Brass', 'Ekeremor', 'Kolokuma'],
+            'Benue': ['Makurdi', 'Gboko', 'Otukpo', 'Katsina-Ala', 'Vandeikya'],
+            'Borno': ['Maiduguri', 'Biu', 'Bama', 'Dikwa', 'Gubio'],
+            'Cross River': ['Calabar', 'Ugep', 'Ikom', 'Obudu', 'Ogoja'],
+            'Delta': ['Asaba', 'Warri', 'Sapele', 'Ughelli', 'Agbor'],
+            'Ebonyi': ['Abakaliki', 'Afikpo', 'Onueke', 'Ezza', 'Ishielu'],
+            'Edo': ['Benin City', 'Auchi', 'Ekpoma', 'Uromi', 'Igarra'],
+            'Ekiti': ['Ado Ekiti', 'Ikere', 'Oye', 'Ijero', 'Ise'],
+            'Enugu': ['Enugu', 'Nsukka', 'Oji River', 'Awgu', 'Udi'],
+            'Gombe': ['Gombe', 'Billiri', 'Kaltungo', 'Dukku', 'Bajoga'],
+            'Imo': ['Owerri', 'Orlu', 'Okigwe', 'Mbaitoli', 'Nkwerre'],
+            'Jigawa': ['Dutse', 'Hadejia', 'Kazaure', 'Ringim', 'Gumel'],
+            'Kaduna': ['Kaduna', 'Zaria', 'Kafanchan', 'Kagoro', 'Saminaka'],
+            'Kano': ['Kano', 'Wudil', 'Gwarzo', 'Rano', 'Karaye'],
+            'Katsina': ['Katsina', 'Daura', 'Funtua', 'Malumfashi', 'Kankia'],
+            'Kebbi': ['Birnin Kebbi', 'Argungu', 'Yauri', 'Zuru', 'Bagudo'],
+            'Kogi': ['Lokoja', 'Okene', 'Kabba', 'Anyigba', 'Idah'],
+            'Kwara': ['Ilorin', 'Offa', 'Omu-Aran', 'Lafiagi', 'Kaiama'],
+            'Lagos': ['Ikeja', 'Victoria Island', 'Ikoyi', 'Lekki', 'Surulere', 'Yaba', 'Mushin', 'Agege', 'Alimosho', 'Epe'],
+            'Nasarawa': ['Lafia', 'Keffi', 'Akwanga', 'Nasarawa', 'Doma'],
+            'Niger': ['Minna', 'Bida', 'Kontagora', 'Suleja', 'New Bussa'],
+            'Ogun': ['Abeokuta', 'Sagamu', 'Ijebu Ode', 'Ota', 'Ilaro'],
+            'Ondo': ['Akure', 'Ondo', 'Owo', 'Ikare', 'Okitipupa'],
+            'Osun': ['Osogbo', 'Ife', 'Ilesha', 'Ede', 'Iwo'],
+            'Oyo': ['Ibadan', 'Ogbomoso', 'Oyo', 'Iseyin', 'Saki'],
+            'Plateau': ['Jos', 'Bukuru', 'Pankshin', 'Shendam', 'Mangu'],
+            'Rivers': ['Port Harcourt', 'Obio-Akpor', 'Okrika', 'Eleme', 'Bonny'],
+            'Sokoto': ['Sokoto', 'Tambuwal', 'Gwadabawa', 'Bodinga', 'Illela'],
+            'Taraba': ['Jalingo', 'Wukari', 'Bali', 'Gembu', 'Serti'],
+            'Yobe': ['Damaturu', 'Potiskum', 'Gashua', 'Nguru', 'Geidam'],
+            'Zamfara': ['Gusau', 'Kaura Namoda', 'Talata Mafara', 'Anka', 'Tsafe'],
+            'Federal Capital Territory': ['Garki', 'Maitama', 'Wuse', 'Gwarinpa', 'Kubwa', 'Asokoro', 'Jabi', 'Utako', 'Nyanya', 'Karu']
+        }
+        
+        # State codes for Nigerian states
+        state_codes = {
+            'Abia': 'AB',
+            'Adamawa': 'AD', 
+            'Akwa Ibom': 'AK',
+            'Anambra': 'AN',
+            'Bauchi': 'BA',
+            'Bayelsa': 'BY',
+            'Benue': 'BE',
+            'Borno': 'BO',
+            'Cross River': 'CR',
+            'Delta': 'DE',
+            'Ebonyi': 'EB',
+            'Edo': 'ED',
+            'Ekiti': 'EK',
+            'Enugu': 'EN',
+            'Gombe': 'GO',
+            'Imo': 'IM',
+            'Jigawa': 'JI',
+            'Kaduna': 'KD',
+            'Kano': 'KN',
+            'Katsina': 'KT',
+            'Kebbi': 'KE',
+            'Kogi': 'KO',
+            'Kwara': 'KW',
+            'Lagos': 'LA',
+            'Nasarawa': 'NA',
+            'Niger': 'NI',
+            'Ogun': 'OG',
+            'Ondo': 'ON',
+            'Osun': 'OS',
+            'Oyo': 'OY',
+            'Plateau': 'PL',
+            'Rivers': 'RI',
+            'Sokoto': 'SO',
+            'Taraba': 'TA',
+            'Yobe': 'YO',
+            'Zamfara': 'ZA',
+            'Federal Capital Territory': 'FC'
         }
         
         for state_name, cities in states_cities.items():
             state, created = State.objects.get_or_create(
                 name=state_name,
-                defaults={'code': state_name[:3].upper()}
+                defaults={'code': state_codes.get(state_name, state_name[:2].upper())}
             )
             if created:
                 self.stdout.write(f'Created state: {state_name}')
