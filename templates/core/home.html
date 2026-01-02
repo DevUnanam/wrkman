@@ -2,6 +2,25 @@
 
 {% block title %}Home - ArtisanConnect{% endblock %}
 
+<!-- Swiper CSS -->
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<style>
+    .artisanSwiper {
+        width: 100%;
+        height: 100%;
+        padding-bottom: 3rem;
+    }
+    .artisanSwiper .swiper-slide {
+        display: flex;
+        height: auto;
+    }
+    .artisanSwiper .swiper-wrapper {
+        align-items: stretch;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <!-- Hero Section -->
 <section class="bg-gradient-to-br from-navy to-blue-800 text-white">
@@ -30,16 +49,16 @@
             </div>
             
             <div class="relative">
-                <div class="bg-white rounded-lg p-6 shadow-2xl">
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-2xl">
                     <div class="flex items-center mb-4">
                         <i class="fas fa-star text-yellow-400 mr-1"></i>
-                        <span class="text-navy font-semibold">{{ total_artisans }}+ Verified Artisans</span>
+                        <span class="text-navy dark:text-lime font-semibold">{{ total_artisans }}+ Verified Artisans</span>
                     </div>
                     <div class="flex items-center mb-4">
                         <i class="fas fa-tools text-lime mr-2"></i>
-                        <span class="text-navy font-semibold">{{ total_categories }}+ Service Categories</span>
+                        <span class="text-navy dark:text-lime font-semibold">{{ total_categories }}+ Service Categories</span>
                     </div>
-                    <div class="text-navy">
+                    <div class="text-navy dark:text-gray-100">
                         <h3 class="font-bold text-lg mb-2">Why Choose Us?</h3>
                         <ul class="space-y-2">
                             <li class="flex items-center">
@@ -63,21 +82,21 @@
 </section>
 
 <!-- Search Section -->
-<section class="py-16 bg-white">
+<section class="py-16 bg-white dark:bg-gray-900">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-navy mb-4">What service do you need?</h2>
-            <p class="text-gray-600">Search for artisans by service category or location</p>
+            <h2 class="text-3xl font-bold text-navy dark:text-lime mb-4">What service do you need?</h2>
+            <p class="text-gray-600 dark:text-gray-300">Search for artisans by service category or location</p>
         </div>
         
-        <form action="{% url 'core:artisan_list' %}" method="get" class="bg-gray-50 rounded-lg p-6 shadow-lg">
+        <form action="{% url 'core:artisan_list' %}" method="get" class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 shadow-lg">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
                     <input type="text" name="search" placeholder="What service do you need?" 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent">
+                           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
                 </div>
                 <div>
-                    <select name="category" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent">
+                    <select name="category" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
                         <option value="">All Categories</option>
                         {% for category in featured_categories %}
                             <option value="{{ category.id }}">{{ category.name }}</option>
@@ -85,7 +104,7 @@
                     </select>
                 </div>
                 <div>
-                    <select name="state" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent">
+                    <select name="state" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
                         <option value="">All States</option>
                         <!-- States will be populated here -->
                     </select>
@@ -102,23 +121,23 @@
 </section>
 
 <!-- Featured Categories -->
-<section class="py-16 bg-gray-50">
+<section class="py-16 bg-gray-50 dark:bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-navy mb-4">Popular Services</h2>
-            <p class="text-gray-600">Browse our most requested service categories</p>
+            <h2 class="text-3xl font-bold text-navy dark:text-lime mb-4">Popular Services</h2>
+            <p class="text-gray-600 dark:text-gray-300">Browse our most requested service categories</p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for category in featured_categories %}
-            <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition p-6 text-center">
-                <div class="bg-lime bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md hover:shadow-lg transition p-6 text-center">
+                <div class="bg-lime bg-opacity-10 dark:bg-lime dark:bg-opacity-20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas {{ category.icon|default:'fa-tools' }} text-lime text-2xl"></i>
                 </div>
-                <h3 class="text-xl font-semibold text-navy mb-2">{{ category.name }}</h3>
-                <p class="text-gray-600 mb-4">{{ category.description|truncatewords:15 }}</p>
+                <h3 class="text-xl font-semibold text-navy dark:text-lime mb-2">{{ category.name }}</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">{{ category.description|truncatewords:15 }}</p>
                 <div class="flex justify-between items-center">
-                    <span class="text-sm text-gray-500">{{ category.artisan_count }} artisans</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ category.artisan_count }} artisans</span>
                     <a href="{% url 'core:artisan_list' %}?category={{ category.id }}" 
                        class="text-lime hover:text-light-lime font-medium">
                         Browse <i class="fas fa-arrow-right ml-1"></i>
@@ -130,7 +149,7 @@
         
         <div class="text-center mt-12">
             <a href="{% url 'core:artisan_list' %}" 
-               class="bg-navy text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition inline-flex items-center">
+               class="bg-navy dark:bg-gray-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 dark:hover:bg-gray-500 transition inline-flex items-center">
                 View All Categories
                 <i class="fas fa-arrow-right ml-2"></i>
             </a>
@@ -139,100 +158,114 @@
 </section>
 
 <!-- Top Rated Artisans -->
-<section class="py-16 bg-white">
+<section class="py-16 bg-white dark:bg-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-navy mb-4">Top Rated Artisans</h2>
-            <p class="text-gray-600">Meet our highest-rated professionals</p>
+            <h2 class="text-3xl font-bold text-navy dark:text-lime mb-4">Top Rated Artisans</h2>
+            <p class="text-gray-600 dark:text-gray-300">Meet our highest-rated professionals</p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {% for artisan in top_artisans %}
-            <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition overflow-hidden">
-                <div class="relative">
-                    {% if artisan.user.profile_picture %}
-                        <img src="{{ artisan.user.profile_picture.url }}" 
-                             alt="{{ artisan.user.get_full_name }}"
-                             class="w-full h-48 object-cover">
-                    {% else %}
-                        <div class="w-full h-48 bg-gradient-to-br from-lime to-light-lime flex items-center justify-center">
-                            <i class="fas fa-user text-white text-4xl"></i>
+        <!-- Swiper Container -->
+        <div class="relative">
+            <div class="swiper artisanSwiper">
+                <div class="swiper-wrapper">
+                    {% for artisan in top_artisans %}
+                    <div class="swiper-slide">
+                        <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md hover:shadow-lg transition overflow-hidden h-full w-full">
+                            <div class="relative">
+                                {% if artisan.user.profile_picture %}
+                                    <img src="{{ artisan.user.profile_picture.url }}" 
+                                         alt="{{ artisan.user.get_full_name }}"
+                                         class="w-full h-48 object-cover">
+                                {% else %}
+                                    <div class="w-full h-48 bg-gradient-to-br from-lime to-light-lime flex items-center justify-center">
+                                        <i class="fas fa-user text-white text-4xl"></i>
+                                    </div>
+                                {% endif %}
+                                
+                                {% if artisan.is_verified %}
+                                    <div class="absolute top-2 right-2 bg-lime text-white px-2 py-1 rounded-full text-xs">
+                                        <i class="fas fa-check mr-1"></i>Verified
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="p-4">
+                                <h3 class="font-semibold text-navy dark:text-lime mb-1">{{ artisan.user.get_full_name }}</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">{{ artisan.category.name }}</p>
+                                
+                                <div class="flex items-center mb-2">
+                                    <div class="flex items-center mr-2">
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= artisan.average_rating %}
+                                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                            {% else %}
+                                                <i class="far fa-star text-gray-300 dark:text-gray-500 text-sm"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <span class="text-sm text-gray-600 dark:text-gray-300">({{ artisan.review_count }})</span>
+                                </div>
+                                
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lime font-semibold">₦{{ artisan.hourly_rate }}/hr</span>
+                                    <a href="{% url 'core:artisan_detail' artisan.pk %}" 
+                                       class="text-navy dark:text-lime hover:text-lime dark:hover:text-light-lime text-sm font-medium">
+                                        View Profile
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    {% endif %}
-                    
-                    {% if artisan.is_verified %}
-                        <div class="absolute top-2 right-2 bg-lime text-white px-2 py-1 rounded-full text-xs">
-                            <i class="fas fa-check mr-1"></i>Verified
-                        </div>
-                    {% endif %}
+                    </div>
+                    {% endfor %}
                 </div>
                 
-                <div class="p-4">
-                    <h3 class="font-semibold text-navy mb-1">{{ artisan.user.get_full_name }}</h3>
-                    <p class="text-sm text-gray-600 mb-2">{{ artisan.category.name }}</p>
-                    
-                    <div class="flex items-center mb-2">
-                        <div class="flex items-center mr-2">
-                            {% for i in "12345" %}
-                                {% if forloop.counter <= artisan.average_rating %}
-                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
-                                {% else %}
-                                    <i class="far fa-star text-gray-300 text-sm"></i>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                        <span class="text-sm text-gray-600">({{ artisan.review_count }})</span>
-                    </div>
-                    
-                    <div class="flex justify-between items-center">
-                        <span class="text-lime font-semibold">₦{{ artisan.hourly_rate }}/hr</span>
-                        <a href="{% url 'core:artisan_detail' artisan.pk %}" 
-                           class="text-navy hover:text-lime text-sm font-medium">
-                            View Profile
-                        </a>
-                    </div>
-                </div>
+                <!-- Navigation buttons -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
             </div>
-            {% endfor %}
         </div>
     </div>
 </section>
 
 <!-- Recent Reviews -->
 {% if recent_reviews %}
-<section class="py-16 bg-gray-50">
+<section class="py-16 bg-gray-50 dark:bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-navy mb-4">What Our Clients Say</h2>
-            <p class="text-gray-600">Real reviews from satisfied customers</p>
+            <h2 class="text-3xl font-bold text-navy dark:text-lime mb-4">What Our Clients Say</h2>
+            <p class="text-gray-600 dark:text-gray-300">Real reviews from satisfied customers</p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for review in recent_reviews %}
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
                 <div class="flex items-center mb-4">
                     {% for i in "12345" %}
                         {% if forloop.counter <= review.rating %}
                             <i class="fas fa-star text-yellow-400"></i>
                         {% else %}
-                            <i class="far fa-star text-gray-300"></i>
+                            <i class="far fa-star text-gray-300 dark:text-gray-500"></i>
                         {% endif %}
                     {% endfor %}
                 </div>
                 
                 {% if review.title %}
-                    <h4 class="font-semibold text-navy mb-2">{{ review.title }}</h4>
+                    <h4 class="font-semibold text-navy dark:text-lime mb-2">{{ review.title }}</h4>
                 {% endif %}
                 
-                <p class="text-gray-600 mb-4">{{ review.comment|truncatewords:20 }}</p>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">{{ review.comment|truncatewords:20 }}</p>
                 
                 <div class="flex items-center">
-                    <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center mr-3">
-                        <i class="fas fa-user text-gray-600"></i>
+                    <div class="w-10 h-10 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-user text-gray-600 dark:text-gray-300"></i>
                     </div>
                     <div>
-                        <p class="font-medium text-gray-900">{{ review.client.get_full_name|default:review.client.username }}</p>
-                        <p class="text-sm text-gray-500">for {{ review.artisan.user.get_full_name }}</p>
+                        <p class="font-medium text-gray-900 dark:text-gray-100">{{ review.client.get_full_name|default:review.client.username }}</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">for {{ review.artisan.user.get_full_name }}</p>
                     </div>
                 </div>
             </div>
@@ -261,4 +294,87 @@
         </div>
     </div>
 </section>
+
+<!-- Swiper JS -->
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const artisanSwiper = new Swiper('.artisanSwiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                dynamicBullets: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 24,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 24,
+                },
+                1280: {
+                    slidesPerView: 4,
+                    spaceBetween: 32,
+                }
+            }
+        });
+
+        // Custom styling for navigation and pagination
+        const style = document.createElement('style');
+        style.textContent = `
+            .artisanSwiper .swiper-button-next,
+            .artisanSwiper .swiper-button-prev {
+                color: rgb(101, 163, 13);
+                background: white;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                border: 1px solid #e5e7eb;
+            }
+            .dark .artisanSwiper .swiper-button-next,
+            .dark .artisanSwiper .swiper-button-prev {
+                background: rgb(31, 41, 55);
+                border: 1px solid rgb(75, 85, 99);
+            }
+            .artisanSwiper .swiper-button-next:after,
+            .artisanSwiper .swiper-button-prev:after {
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .artisanSwiper .swiper-pagination {
+                bottom: -2rem;
+            }
+            .artisanSwiper .swiper-pagination-bullet {
+                background: rgb(101, 163, 13);
+                opacity: 0.3;
+                width: 10px;
+                height: 10px;
+            }
+            .artisanSwiper .swiper-pagination-bullet-active {
+                opacity: 1;
+            }
+        `;
+        document.head.appendChild(style);
+    });
+</script>
+{% endblock %}
 {% endblock %}
