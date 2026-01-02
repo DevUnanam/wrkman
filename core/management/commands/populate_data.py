@@ -5,12 +5,33 @@ from reviews.models import Review
 from core.models import FAQ
 from decimal import Decimal
 import random
+import os
+import requests
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 
 User = get_user_model()
 
 
 class Command(BaseCommand):
     help = 'Populate database with sample data for development'
+
+    def download_profile_image(self, seed=None):
+        """Download a random profile image from Lorem Picsum"""
+        try:
+            # Use Lorem Picsum for placeholder images
+            # Adding seed for consistent images per artisan
+            url = f"https://picsum.photos/300/300?random={seed or random.randint(1, 1000)}"
+            response = requests.get(url, timeout=10)
+            
+            if response.status_code == 200:
+                return ContentFile(response.content, name=f'profile_{seed or random.randint(1000, 9999)}.jpg')
+            else:
+                self.stdout.write(self.style.WARNING(f'Failed to download image: HTTP {response.status_code}'))
+                return None
+        except Exception as e:
+            self.stdout.write(self.style.WARNING(f'Error downloading profile image: {str(e)}'))
+            return None
 
     def handle(self, *args, **options):
         self.stdout.write('Creating sample data...')
@@ -244,6 +265,19 @@ class Command(BaseCommand):
                     is_verified=True
                 )
                 
+                # Download and set profile picture
+                profile_image = self.download_profile_image(seed=hash(artisan['username']) % 1000)
+                if profile_image:
+                    user.profile_picture.save(
+                        f'profile_{artisan["username"]}.jpg',
+                        profile_image,
+                        save=False  # Don't save yet, will save after setting other fields
+                    )
+                    self.stdout.write(f'Added profile image for {artisan["username"]}')
+                
+                # Save user after setting profile picture
+                user.save()
+                
                 # Create artisan profile
                 category = Category.objects.get(name=artisan['category'])
                 random_state = random.choice(states)
@@ -267,6 +301,20 @@ class Command(BaseCommand):
                     profile.skills.set(selected_skills)
                 
                 self.stdout.write(f'Created artisan: {artisan["username"]}')
+            else:
+                # Update existing artisan with profile picture if they don't have one
+                user = User.objects.get(username=artisan['username'])
+                if not user.profile_picture:
+                    profile_image = self.download_profile_image(seed=hash(artisan['username']) % 1000)
+                    if profile_image:
+                        user.profile_picture.save(
+                            f'profile_{artisan["username"]}.jpg',
+                            profile_image,
+                            save=True
+                        )
+                        self.stdout.write(f'Updated profile image for existing artisan: {artisan["username"]}')
+                
+                self.stdout.write(f'Artisan already exists: {artisan["username"]}')
         
         # Create sample reviews
         clients = User.objects.filter(role='client')

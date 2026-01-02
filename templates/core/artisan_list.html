@@ -157,8 +157,8 @@
                 <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-200">
                     <!-- Profile Image -->
                     <div class="relative">
-                        {% if artisan.profile_image %}
-                            <img src="{{ artisan.profile_image.url }}" alt="{{ artisan.user.get_full_name }}" 
+                        {% if artisan.user.profile_picture %}
+                            <img src="{{ artisan.user.profile_picture.url }}" alt="{{ artisan.user.get_full_name }}" 
                                  class="w-full h-48 object-cover">
                         {% else %}
                             <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
