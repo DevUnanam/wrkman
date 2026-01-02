@@ -1,0 +1,285 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - ArtisanConnect{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-br from-navy to-blue-800 text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-5xl font-bold mb-6">About ArtisanConnect</h1>
+        <p class="text-xl text-blue-100 max-w-3xl mx-auto">
+            Connecting communities with skilled professionals across Nigeria. We believe everyone deserves access to quality, reliable services.
+        </p>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <!-- Mission & Vision -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+        <div>
+            <div class="bg-white rounded-lg shadow-lg p-8 h-full">
+                <div class="flex items-center mb-6">
+                    {% comment %} <div class="w-12 h-12 bg-lime rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-bullseye text-white text-xl"></i>
+                    </div> {% endcomment %}
+                    <h2 class="text-2xl font-bold text-navy">Our Mission</h2>
+                </div>
+                <p class="text-gray-700 leading-relaxed">
+                    To bridge the gap between skilled artisans and clients seeking quality services by providing a trusted,
+                    transparent platform that empowers local professionals and ensures customer satisfaction across Nigeria.
+                </p>
+            </div>
+        </div>
+
+        <div>
+            <div class="bg-white rounded-lg shadow-lg p-8 h-full">
+                <div class="flex items-center mb-6">
+                    {% comment %} <div class="w-12 h-12 bg-lime rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-eye text-white text-xl"></i>
+                    </div> {% endcomment %}
+                    <h2 class="text-2xl  font-bold text-navy">Our Vision</h2>
+                </div>
+                <p class="text-gray-700 leading-relaxed">
+                    To become the leading platform for artisan services in Nigeria, fostering economic growth by creating
+                    opportunities for skilled professionals while providing reliable, accessible services to every community.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our Story -->
+    <div class="mb-20">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy mb-4">Our Story</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                From a simple idea to a thriving platform connecting communities across Nigeria
+            </p>
+        </div>
+
+        <div class="bg-gray-50 rounded-lg p-8 lg:p-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-xl font-semibold text-navy mb-4">The Beginning</h3>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        ArtisanConnect was born from a simple frustration: finding reliable, skilled professionals for everyday services.
+                        Too many talented artisans struggled to reach customers, while families spent hours searching for trustworthy service providers.
+                    </p>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        Founded in 2023, we set out to solve this problem by creating a platform that puts quality, transparency,
+                        and community at its heart. We believe that every skilled professional deserves recognition and every customer deserves peace of mind.
+                    </p>
+                    <p class="text-gray-700 leading-relaxed">
+                        Today, we're proud to serve communities across Nigeria, connecting verified artisans with families and businesses who need their skills.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="inline-block p-4 bg-white rounded-lg shadow-lg">
+                        <img src="{% static 'images/artisangroupie.jpeg' %}" alt="Artisan Group" class="w-96 h-72 object-cover rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="mb-20">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy mb-4">Our Impact</h2>
+            <p class="text-lg text-gray-600">Numbers that reflect our commitment to connecting communities</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center bg-white rounded-lg shadow-lg p-8">
+                <div class="w-16 h-16 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-users text-white text-2xl"></i>
+                </div>
+                <h3 class="text-3xl font-bold text-navy mb-2">{{ total_artisans }}+</h3>
+                <p class="text-gray-600">Verified Artisans</p>
+                <p class="text-sm text-gray-500 mt-2">Skilled professionals ready to serve</p>
+            </div>
+
+            <div class="text-center bg-white rounded-lg shadow-lg p-8">
+                <div class="w-16 h-16 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-star text-white text-2xl"></i>
+                </div>
+                <h3 class="text-3xl font-bold text-navy mb-2">{{ total_reviews }}+</h3>
+                <p class="text-gray-600">Customer Reviews</p>
+                <p class="text-sm text-gray-500 mt-2">Real feedback from satisfied clients</p>
+            </div>
+
+            <div class="text-center bg-white rounded-lg shadow-lg p-8">
+                <div class="w-16 h-16 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-tools text-white text-2xl"></i>
+                </div>
+                <h3 class="text-3xl font-bold text-navy mb-2">{{ total_categories }}+</h3>
+                <p class="text-gray-600">Service Categories</p>
+                <p class="text-sm text-gray-500 mt-2">From plumbing to tech support</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Values -->
+    <div class="mb-20">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy mb-4">Our Values</h2>
+            <p class="text-lg text-gray-600">The principles that guide everything we do</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="text-center p-6">
+                <div class="w-16 h-16 bg-lime bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shield-alt text-lime text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-navy mb-2">Trust</h3>
+                <p class="text-gray-600 text-sm">Every artisan is verified, every service is transparent</p>
+            </div>
+
+            <div class="text-center p-6">
+                <div class="w-16 h-16 bg-lime bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-award text-lime text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-navy mb-2">Quality</h3>
+                <p class="text-gray-600 text-sm">We ensure high standards in every service delivery</p>
+            </div>
+
+            <div class="text-center p-6">
+                <div class="w-16 h-16 bg-lime bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-heart text-lime text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-navy mb-2">Community</h3>
+                <p class="text-gray-600 text-sm">Supporting local artisans and strengthening communities</p>
+            </div>
+
+            <div class="text-center p-6">
+                <div class="w-16 h-16 bg-lime bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-rocket text-lime text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-navy mb-2">Innovation</h3>
+                <p class="text-gray-600 text-sm">Constantly improving our platform and services</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="mb-20">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy mb-4">How We Work</h2>
+            <p class="text-lg text-gray-600">Simple steps to connect you with the right professional</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="relative mb-6">
+                    <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto text-white text-2xl font-bold">
+                        1
+                    </div>
+                    <div class="absolute top-10 left-1/2 transform translate-x-8 hidden md:block">
+                        <i class="fas fa-arrow-right text-gray-300 text-2xl"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-navy mb-3">Search & Discover</h3>
+                <p class="text-gray-600">Browse verified artisans in your area or search by specific services you need.</p>
+            </div>
+
+            <div class="text-center">
+                <div class="relative mb-6">
+                    <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto text-white text-2xl font-bold">
+                        2
+                    </div>
+                    <div class="absolute top-10 left-1/2 transform translate-x-8 hidden md:block">
+                        <i class="fas fa-arrow-right text-gray-300 text-2xl"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-navy mb-3">Connect & Hire</h3>
+                <p class="text-gray-600">Review profiles, read reviews, and contact artisans directly to discuss your project.</p>
+            </div>
+
+            <div class="text-center">
+                <div class="mb-6">
+                    <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto text-white text-2xl font-bold">
+                        3
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-navy mb-3">Get Quality Service</h3>
+                <p class="text-gray-600">Enjoy professional service delivery and leave a review to help our community.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Section (Optional - can be expanded with actual team members) -->
+    <div class="mb-20">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy mb-4">Our Commitment</h2>
+            <p class="text-lg text-gray-600">What we promise to our community</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-navy to-blue-800 rounded-lg text-white p-8 lg:p-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">To Our Clients</h3>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-lime mr-3"></i>
+                            <span>Access to verified, skilled professionals</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-lime mr-3"></i>
+                            <span>Transparent pricing and clear communication</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-lime mr-3"></i>
+                            <span>24/7 customer support and dispute resolution</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-lime mr-3"></i>
+                            <span>Safe and secure platform for all interactions</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">To Our Artisans</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-lime mr-3"></i>
+                            <span>Equal opportunities to showcase your skills</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-lime mr-3"></i>
+                            <span>Tools to manage and grow your business</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-lime mr-3"></i>
+                            <span>Fair commission structure and prompt payments</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-lime mr-3"></i>
+                            <span>Training resources and community support</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center bg-gray-50 rounded-lg p-12">
+        <h2 class="text-3xl font-bold text-navy mb-4">Ready to Get Started?</h2>
+        <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            Whether you're looking for quality services or want to offer your skills to the community, we're here to help you connect.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'core:artisan_list' %}"
+               class="bg-lime text-white px-8 py-3 rounded-lg hover:bg-green-700 transition duration-200 text-lg font-semibold">
+                <i class="fas fa-search mr-2"></i>Find Artisans
+            </a>
+            <a href="{% url 'accounts:artisan_register' %}"
+               class="bg-navy text-white px-8 py-3 rounded-lg hover:bg-blue-800 transition duration-200 text-lg font-semibold">
+                <i class="fas fa-plus mr-2"></i>Join as Artisan
+            </a>
+        </div>
+        <p class="text-sm text-gray-500 mt-4">
+            Have questions? <a href="{% url 'core:contact' %}" class="text-lime hover:underline">Contact us</a> - we'd love to hear from you!
+        </p>
+    </div>
+</div>
+{% endblock %}
