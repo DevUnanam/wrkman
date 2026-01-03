@@ -101,22 +101,28 @@
                 </div>
             </div>
 
-            <div class="text-center bg-white rounded-lg shadow-lg p-8 dark:bg-gray-800">
-                <div class="w-16 h-16 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-star text-white text-2xl"></i>
+            <div class="text-center bg-white rounded-lg shadow-lg p-8 relative overflow-hidden dark:bg-gray-800">
+                <div class="absolute inset-0 bg-gradient-to-br from-lime/20 to-lime/10 dark:from-lime/10 dark:to-lime/5"></div>
+                <div class="absolute inset-0 opacity-30 dark:opacity-10">
+                    <img src="{% static 'images/blogger2.jpeg' %}" alt="Artisans Background" class="w-full h-full object-cover">
                 </div>
-                <h3 class="text-3xl font-bold text-navy mb-2 dark:text-lime">{{ total_reviews }}+</h3>
-                <p class="text-gray-600 dark:text-gray-300">Customer Reviews</p>
-                <p class="text-sm text-gray-500 mt-2 dark:text-gray-400">Real feedback from satisfied clients</p>
+                <div class="relative z-10">
+                    <h3 class="text-3xl font-bold text-navy mb-2 dark:text-lime">{{ total_artisans }}+</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Customer Reviews</p>
+                    <p class="text-sm text-gray-500 mt-2 dark:text-gray-400">Real feedback from satisfied clients</p>
+                </div>
             </div>
 
-            <div class="text-center bg-white rounded-lg shadow-lg p-8 dark:bg-gray-800">
-                <div class="w-16 h-16 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-tools text-white text-2xl"></i>
+            <div class="text-center bg-white rounded-lg shadow-lg p-8 relative overflow-hidden dark:bg-gray-800">
+                <div class="absolute inset-0 bg-gradient-to-br from-lime/20 to-lime/10 dark:from-lime/10 dark:to-lime/5"></div>
+                <div class="absolute inset-0 opacity-30 dark:opacity-10">
+                    <img src="{% static 'images/blogger3.jpeg' %}" alt="Artisans Background" class="w-full h-full object-cover">
                 </div>
-                <h3 class="text-3xl font-bold text-navy mb-2 dark:text-lime">{{ total_categories }}+</h3>
-                <p class="text-gray-600 dark:text-gray-300">Service Categories</p>
-                <p class="text-sm text-gray-500 mt-2 dark:text-gray-400">From plumbing to tech support</p>
+                <div class="relative z-10">
+                    <h3 class="text-3xl font-bold text-navy mb-2 dark:text-lime">{{ total_artisans }}+</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Service Categories</p>
+                    <p class="text-sm text-gray-500 mt-2 dark:text-gray-400">From plumbing to tech support</p>
+                </div>
             </div>
         </div>
     </div>
@@ -163,55 +169,9 @@
         </div>
     </div>
 
-    <!-- How It Works -->
-    <div class="mb-20">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-navy mb-4 dark:text-lime">How We Work</h2>
-            <p class="text-lg text-gray-600 dark:text-gray-300">Simple steps to connect you with the right professional</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="text-center">
-                <div class="relative mb-6">
-                    <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto text-white text-2xl font-bold">
-                        1
-                    </div>
-                    <div class="absolute top-10 left-1/2 transform translate-x-8 hidden md:block">
-                        <i class="fas fa-arrow-right text-gray-300 text-2xl"></i>
-                    </div>
-                </div>
-                <h3 class="text-xl font-semibold text-navy mb-3 dark:text-lime">Search & Discover</h3>
-                <p class="text-gray-600 dark:text-gray-300">Browse verified artisans in your area or search by specific services you need.</p>
-            </div>
-
-            <div class="text-center">
-                <div class="relative mb-6">
-                    <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto text-white text-2xl font-bold">
-                        2
-                    </div>
-                    <div class="absolute top-10 left-1/2 transform translate-x-8 hidden md:block">
-                        <i class="fas fa-arrow-right text-gray-300 text-2xl"></i>
-                    </div>
-                </div>
-                <h3 class="text-xl font-semibold text-navy mb-3 dark:text-lime">Connect & Hire</h3>
-                <p class="text-gray-600 dark:text-gray-300">Review profiles, read reviews, and contact artisans directly to discuss your project.</p>
-            </div>
-
-            <div class="text-center">
-                <div class="mb-6">
-                    <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto text-white text-2xl font-bold">
-                        3
-                    </div>
-                </div>
-                <h3 class="text-xl font-semibold text-navy mb-3 dark:text-lime">Get Quality Service</h3>
-                <p class="text-gray-600 dark:text-gray-300">Enjoy professional service delivery and leave a review to help our community.</p>
-            </div>
-        </div>
-    </div>
-
     <!-- Team Section (Optional - can be expanded with actual team members) -->
     <div class="mb-20">
-        <div class="text-center mb-12">
+        <div class="text-center mb-6">
             <h2 class="text-3xl font-bold text-navy mb-4 dark:text-lime">Our Commitment</h2>
             <p class="text-lg text-gray-600 dark:text-gray-300">What we promise to our community</p>
         </div>
