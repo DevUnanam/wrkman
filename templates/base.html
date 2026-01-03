@@ -87,7 +87,10 @@
                                 {% if user.is_artisan %}
                                     <a href="{% url 'accounts:edit_profile' %}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Edit Profile</a>
                                 {% endif %}
-                                <a href="{% url 'accounts:logout' %}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</a>
+                                <form method="post" action="{% url 'accounts:logout' %}" class="m-0">
+                                    {% csrf_token %}
+                                    <button type="submit" class="w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 border-0 bg-transparent cursor-pointer">Logout</button>
+                                </form>
                             </div>
                         </div>
                     {% else %}
@@ -134,7 +137,10 @@
 
                 {% if user.is_authenticated %}
                     <a href="{% url 'accounts:profile' %}" class="text-white block px-3 py-2 hover:text-lime">Profile</a>
-                    <a href="{% url 'accounts:logout' %}" class="text-white block px-3 py-2 hover:text-lime">Logout</a>
+                    <form method="post" action="{% url 'accounts:logout' %}" class="m-0">
+                        {% csrf_token %}
+                        <button type="submit" class="text-white block px-3 py-2 hover:text-lime border-0 bg-transparent cursor-pointer w-full text-left">Logout</button>
+                    </form>
                 {% else %}
                     <a href="{% url 'accounts:login' %}" class="text-white block px-3 py-2 hover:text-lime">Login</a>
                     <a href="{% url 'accounts:client_register' %}" class="text-white block px-3 py-2 hover:text-lime">Sign Up as Client</a>
