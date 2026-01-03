@@ -28,12 +28,12 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
                 <h1 class="text-4xl lg:text-6xl font-bold mb-6">
-                    Find & Hire 
+                    Find & Hire
                     <span class="text-lime">Verified</span>
                     Local Artisans
                 </h1>
                 <p class="text-xl lg:text-2xl mb-8 text-gray-200">
-                    Connect with trusted professionals for plumbing, electrical work, 
+                    Connect with trusted professionals for plumbing, electrical work,
                     hairdressing, mechanics, home tutoring, and more.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
@@ -47,7 +47,7 @@
                     </a>
                 </div>
             </div>
-            
+
             <div class="relative">
                 <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-2xl">
                     <div class="flex items-center mb-4">
@@ -88,11 +88,11 @@
             <h2 class="text-3xl font-bold text-navy dark:text-lime mb-4">What service do you need?</h2>
             <p class="text-gray-600 dark:text-gray-300">Search for artisans by service category or location</p>
         </div>
-        
+
         <form action="{% url 'core:artisan_list' %}" method="get" class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 shadow-lg">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
-                    <input type="text" name="search" placeholder="What service do you need?" 
+                    <input type="text" name="search" placeholder="What service do you need?"
                            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
                 </div>
                 <div>
@@ -127,7 +127,7 @@
             <h2 class="text-3xl font-bold text-navy dark:text-lime mb-4">Popular Services</h2>
             <p class="text-gray-600 dark:text-gray-300">Browse our most requested service categories</p>
         </div>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for category in featured_categories %}
             <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md hover:shadow-lg transition p-6 text-center">
@@ -138,7 +138,7 @@
                 <p class="text-gray-600 dark:text-gray-300 mb-4">{{ category.description|truncatewords:15 }}</p>
                 <div class="flex justify-between items-center">
                     <span class="text-sm text-gray-500 dark:text-gray-400">{{ category.artisan_count }} artisans</span>
-                    <a href="{% url 'core:artisan_list' %}?category={{ category.id }}" 
+                    <a href="{% url 'core:artisan_list' %}?category={{ category.id }}"
                        class="text-lime hover:text-light-lime font-medium">
                         Browse <i class="fas fa-arrow-right ml-1"></i>
                     </a>
@@ -146,9 +146,9 @@
             </div>
             {% endfor %}
         </div>
-        
+
         <div class="text-center mt-12">
-            <a href="{% url 'core:artisan_list' %}" 
+            <a href="{% url 'core:artisan_list' %}"
                class="bg-navy dark:bg-gray-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 dark:hover:bg-gray-500 transition inline-flex items-center">
                 View All Categories
                 <i class="fas fa-arrow-right ml-2"></i>
@@ -164,7 +164,7 @@
             <h2 class="text-3xl font-bold text-navy dark:text-lime mb-4">Top Rated Artisans</h2>
             <p class="text-gray-600 dark:text-gray-300">Meet our highest-rated professionals</p>
         </div>
-        
+
         <!-- Swiper Container -->
         <div class="relative">
             <div class="swiper artisanSwiper">
@@ -174,7 +174,7 @@
                         <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md hover:shadow-lg transition overflow-hidden h-full w-full">
                             <div class="relative">
                                 {% if artisan.user.profile_picture %}
-                                    <img src="{{ artisan.user.profile_picture.url }}" 
+                                    <img src="{{ artisan.user.profile_picture.url }}"
                                          alt="{{ artisan.user.get_full_name }}"
                                          class="w-full h-48 object-cover">
                                 {% else %}
@@ -182,18 +182,18 @@
                                         <i class="fas fa-user text-white text-4xl"></i>
                                     </div>
                                 {% endif %}
-                                
+
                                 {% if artisan.is_verified %}
                                     <div class="absolute top-2 right-2 bg-lime text-white px-2 py-1 rounded-full text-xs">
                                         <i class="fas fa-check mr-1"></i>Verified
                                     </div>
                                 {% endif %}
                             </div>
-                            
+
                             <div class="p-4">
                                 <h3 class="font-semibold text-navy dark:text-lime mb-1">{{ artisan.user.get_full_name }}</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">{{ artisan.category.name }}</p>
-                                
+
                                 <div class="flex items-center mb-2">
                                     <div class="flex items-center mr-2">
                                         {% for i in "12345" %}
@@ -206,10 +206,10 @@
                                     </div>
                                     <span class="text-sm text-gray-600 dark:text-gray-300">({{ artisan.review_count }})</span>
                                 </div>
-                                
+
                                 <div class="flex justify-between items-center">
                                     <span class="text-lime font-semibold">₦{{ artisan.hourly_rate }}/hr</span>
-                                    <a href="{% url 'core:artisan_detail' artisan.pk %}" 
+                                    <a href="{% url 'core:artisan_detail' artisan.pk %}"
                                        class="text-navy dark:text-lime hover:text-lime dark:hover:text-light-lime text-sm font-medium">
                                         View Profile
                                     </a>
@@ -219,11 +219,11 @@
                     </div>
                     {% endfor %}
                 </div>
-                
+
                 <!-- Navigation buttons -->
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
-                
+
                 <!-- Pagination -->
                 <div class="swiper-pagination"></div>
             </div>
@@ -239,7 +239,7 @@
             <h2 class="text-3xl font-bold text-navy dark:text-lime mb-4">What Our Clients Say</h2>
             <p class="text-gray-600 dark:text-gray-300">Real reviews from satisfied customers</p>
         </div>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for review in recent_reviews %}
             <div class="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6">
@@ -252,13 +252,13 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-                
+
                 {% if review.title %}
                     <h4 class="font-semibold text-navy dark:text-lime mb-2">{{ review.title }}</h4>
                 {% endif %}
-                
+
                 <p class="text-gray-600 dark:text-gray-300 mb-4">{{ review.comment|truncatewords:20 }}</p>
-                
+
                 <div class="flex items-center">
                     <div class="w-10 h-10 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center mr-3">
                         <i class="fas fa-user text-gray-600 dark:text-gray-300"></i>
@@ -283,11 +283,11 @@
             Join thousands of satisfied clients who found their perfect artisan through our platform
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="{% url 'core:artisan_list' %}" 
+            <a href="{% url 'core:artisan_list' %}"
                class="bg-lime text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-light-lime transition">
                 Find an Artisan Now
             </a>
-            <a href="{% url 'accounts:artisan_register' %}" 
+            <a href="{% url 'accounts:artisan_register' %}"
                class="border-2 border-white text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-navy transition">
                 Become an Artisan
             </a>

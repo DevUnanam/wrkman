@@ -19,9 +19,9 @@
                 <!-- Search Input -->
                 <div class="col-span-full lg:col-span-1">
                     <label for="search" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Search</label>
-                    <input 
-                        type="text" 
-                        name="search" 
+                    <input
+                        type="text"
+                        name="search"
                         id="search"
                         value="{{ search_query }}"
                         placeholder="Name, skill, or service..."
@@ -73,9 +73,9 @@
                 <!-- Price Range -->
                 <div>
                     <label for="min_rate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Min Rate (₦/hour)</label>
-                    <input 
-                        type="number" 
-                        name="min_rate" 
+                    <input
+                        type="number"
+                        name="min_rate"
                         id="min_rate"
                         value="{{ min_rate }}"
                         placeholder="0"
@@ -86,9 +86,9 @@
 
                 <div>
                     <label for="max_rate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Max Rate (₦/hour)</label>
-                    <input 
-                        type="number" 
-                        name="max_rate" 
+                    <input
+                        type="number"
+                        name="max_rate"
                         id="max_rate"
                         value="{{ max_rate }}"
                         placeholder="10000"
@@ -123,8 +123,8 @@
 
                 <!-- Search Button -->
                 <div class="flex items-end">
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         class="w-full bg-lime text-white font-medium py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-200"
                     >
                         <i class="fas fa-search mr-2"></i>Search
@@ -134,9 +134,9 @@
 
             <!-- Verified Only Checkbox -->
             <div class="flex items-center">
-                <input 
-                    type="checkbox" 
-                    name="verified_only" 
+                <input
+                    type="checkbox"
+                    name="verified_only"
                     id="verified_only"
                     value="1"
                     {% if verified_only %}checked{% endif %}
@@ -158,14 +158,14 @@
                     <!-- Profile Image -->
                     <div class="relative">
                         {% if artisan.user.profile_picture %}
-                            <img src="{{ artisan.user.profile_picture.url }}" alt="{{ artisan.user.get_full_name }}" 
+                            <img src="{{ artisan.user.profile_picture.url }}" alt="{{ artisan.user.get_full_name }}"
                                  class="w-full h-48 object-cover">
                         {% else %}
                             <div class="w-full h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
                                 <i class="fas fa-user text-gray-400 dark:text-gray-500 text-4xl"></i>
                             </div>
                         {% endif %}
-                        
+
                         <!-- Availability Badge -->
                         {% if artisan.availability == 'available' %}
                             <span class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
@@ -234,7 +234,7 @@
                         </p>
 
                         <!-- View Profile Button -->
-                        <a href="{% url 'core:artisan_detail' artisan.pk %}" 
+                        <a href="{% url 'core:artisan_detail' artisan.pk %}"
                            class="block w-full bg-navy dark:bg-lime text-white text-center py-2 rounded-md hover:bg-blue-800 dark:hover:bg-green-700 transition duration-200">
                             View Profile
                         </a>
@@ -248,7 +248,7 @@
             <div class="flex justify-center">
                 <nav class="flex space-x-2">
                     {% if artisans.has_previous %}
-                        <a href="?{{ request.GET.urlencode }}&page={{ artisans.previous_page_number }}" 
+                        <a href="?{{ request.GET.urlencode }}&page={{ artisans.previous_page_number }}"
                            class="px-3 py-2 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 dark:text-gray-300 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700">
                             Previous
                         </a>
@@ -260,7 +260,7 @@
                                 {{ num }}
                             </span>
                         {% elif num > artisans.number|add:'-3' and num < artisans.number|add:'3' %}
-                            <a href="?{{ request.GET.urlencode }}&page={{ num }}" 
+                            <a href="?{{ request.GET.urlencode }}&page={{ num }}"
                                class="px-3 py-2 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 dark:text-gray-300 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700">
                                 {{ num }}
                             </a>
@@ -268,7 +268,7 @@
                     {% endfor %}
 
                     {% if artisans.has_next %}
-                        <a href="?{{ request.GET.urlencode }}&page={{ artisans.next_page_number }}" 
+                        <a href="?{{ request.GET.urlencode }}&page={{ artisans.next_page_number }}"
                            class="px-3 py-2 text-sm text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 dark:text-gray-300 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700">
                             Next
                         </a>
@@ -283,7 +283,7 @@
             <i class="fas fa-search text-gray-300 text-6xl mb-4 dark:text-gray-600"></i>
             <h3 class="text-xl font-semibold text-gray-600 mb-2 dark:text-gray-300">No artisans found</h3>
             <p class="text-gray-500 mb-6 dark:text-gray-400">Try adjusting your search criteria or filters</p>
-            <a href="{% url 'core:artisan_list' %}" 
+            <a href="{% url 'core:artisan_list' %}"
                class="inline-block bg-lime text-white px-6 py-3 rounded-md hover:bg-green-700 transition duration-200 dark:bg-lime dark:hover:bg-green-600">
                 Clear All Filters
             </a>
@@ -296,10 +296,10 @@
     document.getElementById('state').addEventListener('change', function() {
         const stateId = this.value;
         const citySelect = document.getElementById('city');
-        
+
         // Clear current city options
         citySelect.innerHTML = '<option value="">All Cities</option>';
-        
+
         if (stateId) {
             // Filter cities based on selected state
             {% for city in cities %}

@@ -23,7 +23,7 @@ class Command(BaseCommand):
             # Adding seed for consistent images per artisan
             url = f"https://picsum.photos/300/300?random={seed or random.randint(1, 1000)}"
             response = requests.get(url, timeout=10)
-            
+
             if response.status_code == 200:
                 return ContentFile(response.content, name=f'profile_{seed or random.randint(1000, 9999)}.jpg')
             else:
@@ -35,7 +35,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.stdout.write('Creating sample data...')
-        
+
         # Create superuser
         if not User.objects.filter(username='admin').exists():
             User.objects.create_superuser(
@@ -46,7 +46,7 @@ class Command(BaseCommand):
                 last_name='User'
             )
             self.stdout.write(self.style.SUCCESS('Created superuser: admin/admin123'))
-        
+
         # Create all 36 Nigerian states and FCT with major cities
         states_cities = {
             'Abia': ['Umuahia', 'Aba', 'Arochukwu', 'Ohafia', 'Ikwuano'],
@@ -87,11 +87,11 @@ class Command(BaseCommand):
             'Zamfara': ['Gusau', 'Kaura Namoda', 'Talata Mafara', 'Anka', 'Tsafe'],
             'Federal Capital Territory': ['Garki', 'Maitama', 'Wuse', 'Gwarinpa', 'Kubwa', 'Asokoro', 'Jabi', 'Utako', 'Nyanya', 'Karu']
         }
-        
+
         # State codes for Nigerian states
         state_codes = {
             'Abia': 'AB',
-            'Adamawa': 'AD', 
+            'Adamawa': 'AD',
             'Akwa Ibom': 'AK',
             'Anambra': 'AN',
             'Bauchi': 'BA',
@@ -128,7 +128,7 @@ class Command(BaseCommand):
             'Zamfara': 'ZA',
             'Federal Capital Territory': 'FC'
         }
-        
+
         for state_name, cities in states_cities.items():
             state, created = State.objects.get_or_create(
                 name=state_name,
@@ -136,7 +136,7 @@ class Command(BaseCommand):
             )
             if created:
                 self.stdout.write(f'Created state: {state_name}')
-            
+
             for city_name in cities:
                 city, created = City.objects.get_or_create(
                     name=city_name,
@@ -144,7 +144,7 @@ class Command(BaseCommand):
                 )
                 if created:
                     self.stdout.write(f'Created city: {city_name}, {state_name}')
-        
+
         # Create categories and skills
         categories_data = [
             {
@@ -196,7 +196,7 @@ class Command(BaseCommand):
                 'skills': ['Interior Painting', 'Exterior Painting', 'Wall Preparation', 'Color Consultation', 'Touch-ups']
             }
         ]
-        
+
         for cat_data in categories_data:
             category, created = Category.objects.get_or_create(
                 name=cat_data['name'],
@@ -207,7 +207,7 @@ class Command(BaseCommand):
             )
             if created:
                 self.stdout.write(f'Created category: {cat_data["name"]}')
-            
+
             for skill_name in cat_data['skills']:
                 skill, created = Skill.objects.get_or_create(
                     name=skill_name,
@@ -216,7 +216,7 @@ class Command(BaseCommand):
                 )
                 if created:
                     self.stdout.write(f'Created skill: {skill_name}')
-        
+
         # Create sample clients
         client_data = [
             {'username': 'john_client', 'first_name': 'John', 'last_name': 'Doe', 'email': 'john@example.com'},
@@ -224,7 +224,7 @@ class Command(BaseCommand):
             {'username': 'mike_client', 'first_name': 'Mike', 'last_name': 'Johnson', 'email': 'mike@example.com'},
             {'username': 'sarah_client', 'first_name': 'Sarah', 'last_name': 'Williams', 'email': 'sarah@example.com'},
         ]
-        
+
         for client in client_data:
             if not User.objects.filter(username=client['username']).exists():
                 User.objects.create_user(
@@ -236,7 +236,7 @@ class Command(BaseCommand):
                     role='client'
                 )
                 self.stdout.write(f'Created client: {client["username"]}')
-        
+
         # Create sample artisans
         artisan_data = [
             {'username': 'ahmed_plumber', 'first_name': 'Ahmed', 'last_name': 'Hassan', 'category': 'Plumbing', 'rate': 2500},
@@ -248,9 +248,9 @@ class Command(BaseCommand):
             {'username': 'aisha_cleaner', 'first_name': 'Aisha', 'last_name': 'Bello', 'category': 'Cleaning', 'rate': 1200},
             {'username': 'emeka_painter', 'first_name': 'Emeka', 'last_name': 'Nwosu', 'category': 'Painting', 'rate': 1800},
         ]
-        
+
         states = list(State.objects.all())
-        
+
         for artisan in artisan_data:
             if not User.objects.filter(username=artisan['username']).exists():
                 # Create user
@@ -264,7 +264,7 @@ class Command(BaseCommand):
                     is_active=True,
                     is_verified=True
                 )
-                
+
                 # Download and set profile picture
                 profile_image = self.download_profile_image(seed=hash(artisan['username']) % 1000)
                 if profile_image:
@@ -274,15 +274,15 @@ class Command(BaseCommand):
                         save=False  # Don't save yet, will save after setting other fields
                     )
                     self.stdout.write(f'Added profile image for {artisan["username"]}')
-                
+
                 # Save user after setting profile picture
                 user.save()
-                
+
                 # Create artisan profile
                 category = Category.objects.get(name=artisan['category'])
                 random_state = random.choice(states)
                 random_city = random.choice(list(random_state.cities.all()))
-                
+
                 profile = ArtisanProfile.objects.create(
                     user=user,
                     category=category,
@@ -293,13 +293,13 @@ class Command(BaseCommand):
                     years_of_experience=random.randint(2, 15),
                     is_verified=True
                 )
-                
+
                 # Add random skills from category
                 category_skills = list(category.skills.all())
                 if category_skills:
                     selected_skills = random.sample(category_skills, min(3, len(category_skills)))
                     profile.skills.set(selected_skills)
-                
+
                 self.stdout.write(f'Created artisan: {artisan["username"]}')
             else:
                 # Update existing artisan with profile picture if they don't have one
@@ -313,13 +313,13 @@ class Command(BaseCommand):
                             save=True
                         )
                         self.stdout.write(f'Updated profile image for existing artisan: {artisan["username"]}')
-                
+
                 self.stdout.write(f'Artisan already exists: {artisan["username"]}')
-        
+
         # Create sample reviews
         clients = User.objects.filter(role='client')
         artisans = ArtisanProfile.objects.all()
-        
+
         review_comments = [
             'Excellent work! Very professional and timely.',
             'Great service, would definitely recommend.',
@@ -330,7 +330,7 @@ class Command(BaseCommand):
             'Very satisfied with the quality of work.',
             'Affordable and efficient service.',
         ]
-        
+
         review_titles = [
             'Great Service!',
             'Highly Recommended',
@@ -341,12 +341,12 @@ class Command(BaseCommand):
             'Will Hire Again',
             'Outstanding Work'
         ]
-        
+
         for artisan in artisans:
             # Create 1-5 random reviews for each artisan
             num_reviews = random.randint(1, 5)
             selected_clients = random.sample(list(clients), min(num_reviews, len(clients)))
-            
+
             for client in selected_clients:
                 if not Review.objects.filter(client=client, artisan=artisan).exists():
                     Review.objects.create(
@@ -357,7 +357,7 @@ class Command(BaseCommand):
                         comment=random.choice(review_comments),
                         would_recommend=random.choice([True, True, True, False])  # 75% would recommend
                     )
-        
+
         # Create FAQs
         faqs_data = [
             {
@@ -386,7 +386,7 @@ class Command(BaseCommand):
                 'order': 5
             }
         ]
-        
+
         for faq_data in faqs_data:
             faq, created = FAQ.objects.get_or_create(
                 question=faq_data['question'],
@@ -397,7 +397,7 @@ class Command(BaseCommand):
             )
             if created:
                 self.stdout.write(f'Created FAQ: {faq_data["question"]}')
-        
+
         self.stdout.write(
             self.style.SUCCESS('Sample data created successfully!')
         )

@@ -26,14 +26,14 @@
                         <!-- Profile Image -->
                         <div class="relative">
                             {% if artisan.user.profile_picture %}
-                                <img src="{{ artisan.user.profile_picture.url }}" alt="{{ artisan.user.get_full_name }}" 
+                                <img src="{{ artisan.user.profile_picture.url }}" alt="{{ artisan.user.get_full_name }}"
                                      class="w-32 h-32 object-cover rounded-full border-4 border-white shadow-lg">
                             {% else %}
                                 <div class="w-32 h-32 bg-gray-200 rounded-full border-4 border-white shadow-lg flex items-center justify-center dark:bg-gray-700 dark:border-gray-600">
                                     <i class="fas fa-user text-gray-400 text-4xl dark:text-gray-500"></i>
                                 </div>
                             {% endif %}
-                            
+
                             <!-- Availability Badge -->
                             {% if artisan.availability == 'available' %}
                                 <span class="absolute -bottom-2 -right-2 bg-green-500 text-white text-xs px-3 py-1 rounded-full">
@@ -57,7 +57,7 @@
                                     <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ artisan.user.get_full_name }}</h1>
                                     <p class="text-xl text-lime font-semibold mt-1">{{ artisan.category.name }}</p>
                                 </div>
-                                
+
                                 <!-- Verified Badge -->
                                 {% if artisan.is_verified %}
                                     <div class="mt-2 sm:mt-0">
@@ -87,7 +87,7 @@
                                 {% else %}
                                     <span class="text-gray-500 dark:text-gray-400">No reviews yet</span>
                                 {% endif %}
-                                
+
                                 <span class="text-gray-400 dark:text-gray-500">•</span>
                                 <span class="text-gray-600 dark:text-gray-300">{{ artisan.profile_views }} view{{ artisan.profile_views|pluralize }}</span>
                             </div>
@@ -160,7 +160,7 @@
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                         {% for image in gallery_images %}
                             <div class="aspect-square rounded-lg overflow-hidden cursor-pointer hover:opacity-75 transition duration-200">
-                                <img src="{{ image.image.url }}" alt="{{ image.title }}" 
+                                <img src="{{ image.image.url }}" alt="{{ image.title }}"
                                      class="w-full h-full object-cover">
                             </div>
                         {% endfor %}
@@ -194,7 +194,7 @@
                                             <h4 class="font-semibold text-gray-900 dark:text-white">{{ review.client.get_full_name }}</h4>
                                             <span class="text-sm text-gray-500 dark:text-gray-400">{{ review.created_at|date:"M d, Y" }}</span>
                                         </div>
-                                        
+
                                         <!-- Rating Stars -->
                                         <div class="flex items-center mb-2">
                                             <div class="flex text-yellow-400 mr-2">
@@ -212,7 +212,7 @@
                                                 </span>
                                             {% endif %}
                                         </div>
-                                        
+
                                         {% if review.title %}
                                             <h5 class="font-medium text-gray-900 mb-1 dark:text-white">{{ review.title }}</h5>
                                         {% endif %}
@@ -228,7 +228,7 @@
                         <div class="flex justify-center mt-6">
                             <nav class="flex space-x-2">
                                 {% if reviews.has_previous %}
-                                    <a href="?page={{ reviews.previous_page_number }}" 
+                                    <a href="?page={{ reviews.previous_page_number }}"
                                        class="px-3 py-2 text-sm text-gray-500 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 dark:text-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600">
                                         Previous
                                     </a>
@@ -239,7 +239,7 @@
                                 </span>
 
                                 {% if reviews.has_next %}
-                                    <a href="?page={{ reviews.next_page_number }}" 
+                                    <a href="?page={{ reviews.next_page_number }}"
                                        class="px-3 py-2 text-sm text-gray-500 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 dark:text-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600">
                                         Next
                                     </a>
@@ -267,7 +267,7 @@
             <!-- Contact Card -->
             <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-800">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4 dark:text-white">Quick Contact</h3>
-                
+
                 {% if user.is_authenticated and user.is_client %}
                     <div class="space-y-3">
                         <button class="w-full bg-lime text-white py-3 px-4 rounded-md hover:bg-green-700 transition duration-200">
@@ -319,7 +319,7 @@
                         {% for related in related_artisans %}
                             <div class="flex items-center space-x-3">
                                 {% if related.user.profile_picture %}
-                                    <img src="{{ related.user.profile_picture.url }}" alt="{{ related.user.get_full_name }}" 
+                                    <img src="{{ related.user.profile_picture.url }}" alt="{{ related.user.get_full_name }}"
                                          class="w-12 h-12 object-cover rounded-full">
                                 {% else %}
                                     <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center dark:bg-gray-700">
@@ -342,7 +342,7 @@
                                         </div>
                                     {% endif %}
                                 </div>
-                                <a href="{% url 'core:artisan_detail' related.pk %}" 
+                                <a href="{% url 'core:artisan_detail' related.pk %}"
                                    class="text-lime hover:text-green-700 text-sm">View</a>
                             </div>
                         {% endfor %}
