@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Join as Artisan - ArtisanConnect{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-gradient-to-r from-navy to-blue-800 text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-5xl font-bold mb-6">Turn Your Skills Into Income</h1>
+        <p class="text-xl mb-8 max-w-3xl mx-auto">
+            Join thousands of verified artisans on ArtisanConnect and connect with clients who need your expertise.
+            Build your business, showcase your work, and grow your income.
+        </p>
+        <a href="{% url 'accounts:artisan_register' %}" 
+           class="bg-lime text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-light-lime transition transform hover:scale-105 inline-flex items-center space-x-2">
+            <i class="fas fa-rocket"></i>
+            <span>Start Your Journey Today</span>
+        </a>
+    </div>
+</div>
+
+<!-- Why Join Section -->
+<section class="py-16 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy dark:text-white mb-4">Why Choose ArtisanConnect?</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Join a platform that's built for artisans, by people who understand your business needs.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Benefit 1 -->
+            <div class="text-center bg-gray-50 dark:bg-gray-800 p-8 rounded-xl hover:shadow-lg transition">
+                <div class="w-16 h-16 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-users text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Access to Verified Clients</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Connect with serious clients who are actively looking for skilled artisans like you.
+                    No more chasing leads or dealing with time-wasters.
+                </p>
+            </div>
+
+            <!-- Benefit 2 -->
+            <div class="text-center bg-gray-50 dark:bg-gray-800 p-8 rounded-xl hover:shadow-lg transition">
+                <div class="w-16 h-16 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shield-alt text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Verified Badge & Trust</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Get verified and showcase your credentials. Our verification process helps build trust
+                    and increases your chances of getting hired.
+                </p>
+            </div>
+
+            <!-- Benefit 3 -->
+            <div class="text-center bg-gray-50 dark:bg-gray-800 p-8 rounded-xl hover:shadow-lg transition">
+                <div class="w-16 h-16 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-chart-line text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Grow Your Business</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Track your performance, get reviews, and build a strong reputation that attracts
+                    more clients and higher-paying projects.
+                </p>
+            </div>
+
+            <!-- Benefit 4 -->
+            <div class="text-center bg-gray-50 dark:bg-gray-800 p-8 rounded-xl hover:shadow-lg transition">
+                <div class="w-16 h-16 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-mobile-alt text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Easy to Use Platform</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Our user-friendly platform makes it simple to manage your profile, communicate with
+                    clients, and showcase your work portfolio.
+                </p>
+            </div>
+
+            <!-- Benefit 5 -->
+            <div class="text-center bg-gray-50 dark:bg-gray-800 p-8 rounded-xl hover:shadow-lg transition">
+                <div class="w-16 h-16 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-star text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Build Your Reputation</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Collect reviews and ratings from satisfied clients. Positive feedback helps you
+                    stand out and attract premium projects.
+                </p>
+            </div>
+
+            <!-- Benefit 6 -->
+            <div class="text-center bg-gray-50 dark:bg-gray-800 p-8 rounded-xl hover:shadow-lg transition">
+                <div class="w-16 h-16 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-handshake text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Support & Community</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Join a community of skilled professionals. Get support when you need it and
+                    connect with fellow artisans for collaboration opportunities.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="py-16 bg-gray-100 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy dark:text-white mb-4">Join Our Growing Community</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div>
+                <div class="text-4xl font-bold text-lime mb-2">{{ total_artisans }}+</div>
+                <div class="text-gray-600 dark:text-gray-300 font-semibold">Verified Artisans</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-lime mb-2">{{ total_reviews }}+</div>
+                <div class="text-gray-600 dark:text-gray-300 font-semibold">Successful Projects</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-lime mb-2">{{ avg_rating|floatformat:1 }}/5</div>
+                <div class="text-gray-600 dark:text-gray-300 font-semibold">Average Rating</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How to Get Started -->
+<section class="py-16 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy dark:text-white mb-4">How to Get Started</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300">
+                Getting started is simple and takes less than 10 minutes
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Step 1 -->
+            <div class="text-center">
+                <div class="w-12 h-12 bg-navy text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                    1
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Create Your Profile</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Sign up and complete your artisan profile. Add your skills, experience,
+                    location, and portfolio images.
+                </p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="text-center">
+                <div class="w-12 h-12 bg-navy text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                    2
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Get Verified</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Submit your credentials and portfolio for verification. This helps build
+                    trust with potential clients.
+                </p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="text-center">
+                <div class="w-12 h-12 bg-navy text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                    3
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Start Getting Clients</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Once verified, clients can find and contact you directly. Respond to
+                    inquiries and start building your business.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-16 bg-gradient-to-r from-navy to-blue-800 text-white">
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold mb-6">Ready to Start Earning?</h2>
+        <p class="text-xl mb-8">
+            Join ArtisanConnect today and take the first step towards growing your artisan business.
+            It's completely free to get started!
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'accounts:artisan_register' %}" 
+               class="bg-lime text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-light-lime transition transform hover:scale-105 inline-flex items-center justify-center space-x-2">
+                <i class="fas fa-user-plus"></i>
+                <span>Create Artisan Account</span>
+            </a>
+            <a href="{% url 'core:how_it_works' %}" 
+               class="bg-transparent text-white border-2 border-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-navy transition inline-flex items-center justify-center space-x-2">
+                <i class="fas fa-info-circle"></i>
+                <span>Learn How It Works</span>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

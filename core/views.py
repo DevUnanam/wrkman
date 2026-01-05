@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q, Avg, Count
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.views.generic import TemplateView, FormView
+from django.urls import reverse
 from artisans.models import ArtisanProfile, Category, State, City
 from reviews.models import Review
 from .models import FAQ
@@ -221,3 +222,51 @@ def about_view(request):
         'total_categories': Category.objects.count(),
     }
     return render(request, 'core/about.html', context)
+
+
+def join_as_artisan_view(request):
+    """Join as Artisan page with benefits and call-to-action"""
+    context = {
+        'total_artisans': ArtisanProfile.objects.filter(is_verified=True).count(),
+        'avg_rating': Review.objects.aggregate(Avg('rating'))['rating__avg'] or 0,
+        'total_reviews': Review.objects.count(),
+    }
+    return render(request, 'core/join_as_artisan.html', context)
+
+
+def how_it_works_view(request):
+    """How it Works page explaining platform functionality"""
+    context = {
+        'total_categories': Category.objects.count(),
+        'total_artisans': ArtisanProfile.objects.filter(is_verified=True).count(),
+    }
+    return render(request, 'core/how_it_works.html', context)
+
+
+def success_stories_view(request):
+    """Success Stories page showcasing reviews and testimonials"""
+    # Get top-rated reviews (4 stars and above)
+    featured_reviews = Review.objects.filter(
+        rating__gte=4
+    ).select_related(
+        'client', 'artisan__user', 'artisan__category'
+    ).order_by('-rating', '-created_at')[:12]
+    
+    # Get some statistics
+    total_reviews = Review.objects.count()
+    avg_rating = Review.objects.aggregate(Avg('rating'))['rating__avg'] or 0
+    five_star_reviews = Review.objects.filter(rating=5).count()
+    
+    context = {
+        'featured_reviews': featured_reviews,
+        'total_reviews': total_reviews,
+        'avg_rating': round(avg_rating, 1) if avg_rating else 0,
+        'five_star_reviews': five_star_reviews,
+        'satisfaction_rate': round((five_star_reviews / total_reviews * 100), 1) if total_reviews > 0 else 0,
+    }
+    return render(request, 'core/success_stories.html', context)
+
+
+def help_center_view(request):
+    """Redirect Help Center to Contact page"""
+    return redirect('core:contact')

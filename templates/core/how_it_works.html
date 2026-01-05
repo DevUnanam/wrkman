@@ -1,0 +1,298 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}How It Works - ArtisanConnect{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-gradient-to-r from-navy to-blue-800 text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-5xl font-bold mb-6">How ArtisanConnect Works</h1>
+        <p class="text-xl mb-8 max-w-3xl mx-auto">
+            Understanding how our platform connects skilled artisans with clients looking for quality services.
+            Simple, transparent, and effective.
+        </p>
+    </div>
+</div>
+
+<!-- For Clients Section -->
+<section class="py-16 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy dark:text-white mb-4">For Clients</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Finding and hiring the right artisan for your project has never been easier
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Step 1 -->
+            <div class="text-center">
+                <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-search text-white text-2xl"></i>
+                </div>
+                <div class="w-8 h-8 bg-navy text-white rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                    1
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Search & Filter</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Browse {{ total_categories }} categories of skilled artisans. Use filters to find
+                    professionals by location, rating, price range, and specialty.
+                </p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="text-center">
+                <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-eye text-white text-2xl"></i>
+                </div>
+                <div class="w-8 h-8 bg-navy text-white rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                    2
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Review Profiles</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    View detailed profiles including portfolios, reviews, ratings, and pricing.
+                    All artisans are verified for quality assurance.
+                </p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="text-center">
+                <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-phone text-white text-2xl"></i>
+                </div>
+                <div class="w-8 h-8 bg-navy text-white rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                    3
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Contact Directly</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Contact artisans directly through phone or WhatsApp. Discuss your project
+                    requirements, timeline, and pricing.
+                </p>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="text-center">
+                <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-star text-white text-2xl"></i>
+                </div>
+                <div class="w-8 h-8 bg-navy text-white rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                    4
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Review & Rate</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    After project completion, leave a review and rating to help other clients
+                    and support quality artisans.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- For Artisans Section -->
+<section class="py-16 bg-gray-100 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy dark:text-white mb-4">For Artisans</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Build your business and connect with clients who value quality work
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Step 1 -->
+            <div class="text-center">
+                <div class="w-20 h-20 bg-navy rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-user-plus text-white text-2xl"></i>
+                </div>
+                <div class="w-8 h-8 bg-lime text-white rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                    1
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Create Profile</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Sign up and create a comprehensive profile showcasing your skills,
+                    experience, location, and portfolio of previous work.
+                </p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="text-center">
+                <div class="w-20 h-20 bg-navy rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shield-check text-white text-2xl"></i>
+                </div>
+                <div class="w-8 h-8 bg-lime text-white rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                    2
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Get Verified</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Submit your credentials and portfolio for verification. This builds trust
+                    and helps you stand out to potential clients.
+                </p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="text-center">
+                <div class="w-20 h-20 bg-navy rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-bell text-white text-2xl"></i>
+                </div>
+                <div class="w-8 h-8 bg-lime text-white rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                    3
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Receive Inquiries</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Clients find and contact you directly. Your profile becomes visible
+                    to thousands of potential customers in your area.
+                </p>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="text-center">
+                <div class="w-20 h-20 bg-navy rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-chart-line text-white text-2xl"></i>
+                </div>
+                <div class="w-8 h-8 bg-lime text-white rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                    4
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Grow Business</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Complete projects, receive reviews, and build your reputation.
+                    Higher ratings lead to more clients and better opportunities.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Platform Features -->
+<section class="py-16 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy dark:text-white mb-4">Platform Features</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Built with features that make connecting and working together seamless
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                <div class="w-12 h-12 bg-lime rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-certificate text-white"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-3 text-navy dark:text-white">Verified Professionals</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    All artisans go through a verification process to ensure quality and credibility.
+                </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                <div class="w-12 h-12 bg-lime rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-images text-white"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-3 text-navy dark:text-white">Portfolio Showcase</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Artisans can showcase their work through detailed portfolios and image galleries.
+                </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                <div class="w-12 h-12 bg-lime rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-star-half-alt text-white"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-3 text-navy dark:text-white">Review System</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Transparent review and rating system helps build trust and improve service quality.
+                </p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                <div class="w-12 h-12 bg-lime rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-map-marked-alt text-white"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-3 text-navy dark:text-white">Location-Based Search</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Find artisans in your local area for convenient and timely service delivery.
+                </p>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                <div class="w-12 h-12 bg-lime rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-filter text-white"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-3 text-navy dark:text-white">Advanced Filtering</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Filter by category, location, price range, rating, and availability for precise results.
+                </p>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                <div class="w-12 h-12 bg-lime rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-mobile-alt text-white"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-3 text-navy dark:text-white">Mobile Optimized</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Fully responsive design that works perfectly on desktop, tablet, and mobile devices.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics -->
+<section class="py-16 bg-gradient-to-r from-navy to-blue-800 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-4">Platform Statistics</h2>
+            <p class="text-lg max-w-2xl mx-auto">
+                Numbers that demonstrate the trust and success of our platform
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div>
+                <div class="text-5xl font-bold text-lime mb-2">{{ total_artisans }}+</div>
+                <div class="text-xl font-semibold mb-2">Verified Artisans</div>
+                <div class="text-gray-300">Skilled professionals ready to work</div>
+            </div>
+            <div>
+                <div class="text-5xl font-bold text-lime mb-2">{{ total_categories }}+</div>
+                <div class="text-xl font-semibold mb-2">Service Categories</div>
+                <div class="text-gray-300">From carpentry to electrical work</div>
+            </div>
+            <div>
+                <div class="text-5xl font-bold text-lime mb-2">100%</div>
+                <div class="text-xl font-semibold mb-2">Free to Use</div>
+                <div class="text-gray-300">No hidden fees or commissions</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-16 bg-gray-100 dark:bg-gray-800">
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-navy dark:text-white mb-6">Ready to Get Started?</h2>
+        <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+            Whether you're looking to hire skilled artisans or grow your business as a professional,
+            ArtisanConnect is here to help you succeed.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'core:artisan_list' %}" 
+               class="bg-navy text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-900 transition inline-flex items-center justify-center space-x-2">
+                <i class="fas fa-search"></i>
+                <span>Find Artisans</span>
+            </a>
+            <a href="{% url 'core:join_as_artisan' %}" 
+               class="bg-lime text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-light-lime transition inline-flex items-center justify-center space-x-2">
+                <i class="fas fa-user-plus"></i>
+                <span>Join as Artisan</span>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

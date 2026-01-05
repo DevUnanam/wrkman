@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Success Stories - ArtisanConnect{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-gradient-to-r from-navy to-blue-800 text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-5xl font-bold mb-6">Success Stories</h1>
+        <p class="text-xl mb-8 max-w-3xl mx-auto">
+            Real testimonials from satisfied clients who found amazing artisans through our platform.
+            Discover the quality and professionalism that defines ArtisanConnect.
+        </p>
+    </div>
+</div>
+
+<!-- Statistics Section -->
+<section class="py-16 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy dark:text-white mb-4">Platform Impact</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                The numbers speak for themselves - see the success of our community
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                <div class="text-3xl font-bold text-lime mb-2">{{ total_reviews }}</div>
+                <div class="text-gray-600 dark:text-gray-300 font-semibold">Total Reviews</div>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                <div class="text-3xl font-bold text-lime mb-2">{{ avg_rating }}/5</div>
+                <div class="text-gray-600 dark:text-gray-300 font-semibold">Average Rating</div>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                <div class="text-3xl font-bold text-lime mb-2">{{ five_star_reviews }}</div>
+                <div class="text-gray-600 dark:text-gray-300 font-semibold">Five Star Reviews</div>
+            </div>
+            <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                <div class="text-3xl font-bold text-lime mb-2">{{ satisfaction_rate }}%</div>
+                <div class="text-gray-600 dark:text-gray-300 font-semibold">Satisfaction Rate</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Reviews Section -->
+<section class="py-16 bg-gray-100 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy dark:text-white mb-4">Client Testimonials</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Hear from our clients about their amazing experiences with skilled artisans
+            </p>
+        </div>
+
+        {% if featured_reviews %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for review in featured_reviews %}
+            <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg hover:shadow-xl transition">
+                <!-- Star Rating -->
+                <div class="flex items-center mb-4">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}
+                            <i class="fas fa-star text-yellow-400"></i>
+                        {% else %}
+                            <i class="fas fa-star text-gray-300"></i>
+                        {% endif %}
+                    {% endfor %}
+                    <span class="ml-2 text-sm text-gray-600 dark:text-gray-300">{{ review.rating }}/5</span>
+                </div>
+
+                <!-- Review Text -->
+                <p class="text-gray-700 dark:text-gray-300 mb-6 italic">
+                    "{{ review.review|truncatewords:25 }}"
+                </p>
+
+                <!-- Client Info -->
+                <div class="border-t pt-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-semibold text-navy dark:text-white">
+                                {{ review.client.get_full_name|default:review.client.username }}
+                            </div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">
+                                Client
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm font-semibold text-lime">
+                                {{ review.artisan.user.get_full_name }}
+                            </div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">
+                                {{ review.artisan.category.name }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Date -->
+                <div class="mt-3 text-xs text-gray-500 dark:text-gray-400">
+                    {{ review.created_at|date:"F d, Y" }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-12">
+            <div class="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl max-w-2xl mx-auto">
+                <i class="fas fa-star text-6xl text-gray-300 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-600 dark:text-gray-300 mb-2">No Reviews Yet</h3>
+                <p class="text-gray-500 dark:text-gray-400 mb-6">
+                    Be the first to leave a review and share your success story with the community.
+                </p>
+                <a href="{% url 'core:artisan_list' %}" 
+                   class="bg-lime text-white px-6 py-3 rounded-lg font-semibold hover:bg-light-lime transition">
+                    Find Artisans to Review
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Call to Action for Reviews -->
+<section class="py-16 bg-white dark:bg-gray-900">
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-navy dark:text-white mb-6">Have a Success Story to Share?</h2>
+        <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+            Help other clients discover amazing artisans by sharing your experience.
+            Your review helps build trust and supports quality professionals.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'core:artisan_list' %}" 
+               class="bg-lime text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-light-lime transition inline-flex items-center justify-center space-x-2">
+                <i class="fas fa-search"></i>
+                <span>Find Artisans to Review</span>
+            </a>
+            <a href="{% url 'core:contact' %}" 
+               class="bg-navy text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-900 transition inline-flex items-center justify-center space-x-2">
+                <i class="fas fa-envelope"></i>
+                <span>Contact Us</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- How to Leave a Review Section -->
+<section class="py-16 bg-gray-100 dark:bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy dark:text-white mb-4">How to Leave a Review</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Follow these simple steps to share your experience and help the community
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Step 1 -->
+            <div class="text-center">
+                <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-search text-white text-2xl"></i>
+                </div>
+                <div class="w-8 h-8 bg-navy text-white rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                    1
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Find the Artisan</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Browse to the artisan's profile page who completed work for you.
+                    You can search by name or category.
+                </p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="text-center">
+                <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-edit text-white text-2xl"></i>
+                </div>
+                <div class="w-8 h-8 bg-navy text-white rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                    2
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Write Your Review</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Share your honest experience about the work quality, professionalism,
+                    and overall satisfaction with the service.
+                </p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="text-center">
+                <div class="w-20 h-20 bg-lime rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-star text-white text-2xl"></i>
+                </div>
+                <div class="w-8 h-8 bg-navy text-white rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
+                    3
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-navy dark:text-white">Rate & Submit</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Give a star rating from 1-5 based on your experience and submit
+                    your review to help other clients.
+                </p>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                Note: You must be logged in as a client and can only review each artisan once.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Sample Reviews Categories -->
+<section class="py-16 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-navy dark:text-white mb-4">Reviews by Category</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Discover success stories across different artisan categories
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-lime hover:text-white transition cursor-pointer">
+                <i class="fas fa-hammer text-2xl mb-2"></i>
+                <div class="font-semibold">Carpentry</div>
+            </div>
+            <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-lime hover:text-white transition cursor-pointer">
+                <i class="fas fa-bolt text-2xl mb-2"></i>
+                <div class="font-semibold">Electrical</div>
+            </div>
+            <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-lime hover:text-white transition cursor-pointer">
+                <i class="fas fa-wrench text-2xl mb-2"></i>
+                <div class="font-semibold">Plumbing</div>
+            </div>
+            <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-lime hover:text-white transition cursor-pointer">
+                <i class="fas fa-paint-brush text-2xl mb-2"></i>
+                <div class="font-semibold">Painting</div>
+            </div>
+            <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-lime hover:text-white transition cursor-pointer">
+                <i class="fas fa-home text-2xl mb-2"></i>
+                <div class="font-semibold">Masonry</div>
+            </div>
+            <div class="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-lime hover:text-white transition cursor-pointer">
+                <i class="fas fa-cog text-2xl mb-2"></i>
+                <div class="font-semibold">Welding</div>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="{% url 'core:artisan_list' %}" 
+               class="bg-navy text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-900 transition">
+                Browse All Categories
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-16 bg-gradient-to-r from-lime to-green-600 text-white">
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold mb-6">Join Our Success Community</h2>
+        <p class="text-xl mb-8">
+            Whether you're a client looking for quality work or an artisan building your business,
+            become part of our growing success story community.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'core:artisan_list' %}" 
+               class="bg-white text-lime px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition inline-flex items-center justify-center space-x-2">
+                <i class="fas fa-search"></i>
+                <span>Find Quality Artisans</span>
+            </a>
+            <a href="{% url 'core:join_as_artisan' %}" 
+               class="bg-navy text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-900 transition inline-flex items-center justify-center space-x-2">
+                <i class="fas fa-user-plus"></i>
+                <span>Become an Artisan</span>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
