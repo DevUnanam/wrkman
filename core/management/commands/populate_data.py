@@ -145,55 +145,43 @@ class Command(BaseCommand):
                 if created:
                     self.stdout.write(f'Created city: {city_name}, {state_name}')
 
-        # Create categories and skills
+        # Create categories and skills (matching success stories template)
         categories_data = [
             {
-                'name': 'Plumbing',
-                'description': 'Water systems, pipe repair, leak fixes',
-                'icon': 'fa-wrench',
-                'skills': ['Pipe Installation', 'Leak Repair', 'Water Heater Service', 'Drain Cleaning', 'Toilet Repair']
+                'name': 'Carpentry',
+                'description': 'Wood work, furniture, custom builds, repairs',
+                'icon': 'fa-hammer',
+                'skills': ['Furniture Making', 'Cabinet Installation', 'Door Repair', 'Custom Woodwork', 'Flooring', 'Shelving', 'Deck Building']
             },
             {
                 'name': 'Electrical',
-                'description': 'Wiring, installations, electrical repairs',
+                'description': 'Wiring, installations, electrical repairs and maintenance',
                 'icon': 'fa-bolt',
-                'skills': ['Wiring Installation', 'Lighting Setup', 'Socket Installation', 'Panel Upgrade', 'Generator Repair']
+                'skills': ['Wiring Installation', 'Lighting Setup', 'Socket Installation', 'Panel Upgrade', 'Generator Repair', 'Solar Installation', 'CCTV Setup']
             },
             {
-                'name': 'Hairdressing',
-                'description': 'Hair styling, cutting, treatments',
-                'icon': 'fa-cut',
-                'skills': ['Hair Cutting', 'Hair Styling', 'Hair Coloring', 'Braiding', 'Hair Treatment']
-            },
-            {
-                'name': 'Automotive',
-                'description': 'Car repair and maintenance services',
-                'icon': 'fa-car',
-                'skills': ['Engine Repair', 'Brake Service', 'Oil Change', 'Tire Service', 'AC Repair']
-            },
-            {
-                'name': 'Home Teaching',
-                'description': 'Private tutoring and lessons',
-                'icon': 'fa-graduation-cap',
-                'skills': ['Mathematics', 'English', 'Science', 'Computer Skills', 'Music Lessons']
-            },
-            {
-                'name': 'Carpentry',
-                'description': 'Wood work, furniture, repairs',
-                'icon': 'fa-hammer',
-                'skills': ['Furniture Making', 'Cabinet Installation', 'Door Repair', 'Custom Woodwork', 'Flooring']
-            },
-            {
-                'name': 'Cleaning',
-                'description': 'House cleaning and maintenance',
-                'icon': 'fa-broom',
-                'skills': ['House Cleaning', 'Office Cleaning', 'Deep Cleaning', 'Carpet Cleaning', 'Window Cleaning']
+                'name': 'Plumbing',
+                'description': 'Water systems, pipe repair, installation and maintenance',
+                'icon': 'fa-wrench',
+                'skills': ['Pipe Installation', 'Leak Repair', 'Water Heater Service', 'Drain Cleaning', 'Toilet Repair', 'Bathroom Renovation', 'Kitchen Plumbing']
             },
             {
                 'name': 'Painting',
-                'description': 'Interior and exterior painting',
+                'description': 'Interior and exterior painting, decorative finishes',
                 'icon': 'fa-paint-brush',
-                'skills': ['Interior Painting', 'Exterior Painting', 'Wall Preparation', 'Color Consultation', 'Touch-ups']
+                'skills': ['Interior Painting', 'Exterior Painting', 'Wall Preparation', 'Color Consultation', 'Touch-ups', 'Decorative Painting', 'Spray Painting']
+            },
+            {
+                'name': 'Masonry',
+                'description': 'Bricklaying, stonework, concrete work, construction',
+                'icon': 'fa-home',
+                'skills': ['Bricklaying', 'Block Work', 'Stone Installation', 'Concrete Pouring', 'Wall Building', 'Foundation Work', 'Tiling']
+            },
+            {
+                'name': 'Welding',
+                'description': 'Metal fabrication, welding, metalwork services',
+                'icon': 'fa-cog',
+                'skills': ['Arc Welding', 'Gas Welding', 'Metal Fabrication', 'Gate Making', 'Structural Welding', 'Repair Welding', 'Stainless Steel Work']
             }
         ]
 
@@ -217,12 +205,28 @@ class Command(BaseCommand):
                 if created:
                     self.stdout.write(f'Created skill: {skill_name}')
 
-        # Create sample clients
+        # Create sample clients (expanded for more reviews)
         client_data = [
             {'username': 'john_client', 'first_name': 'John', 'last_name': 'Doe', 'email': 'john@example.com'},
             {'username': 'jane_client', 'first_name': 'Jane', 'last_name': 'Smith', 'email': 'jane@example.com'},
             {'username': 'mike_client', 'first_name': 'Mike', 'last_name': 'Johnson', 'email': 'mike@example.com'},
             {'username': 'sarah_client', 'first_name': 'Sarah', 'last_name': 'Williams', 'email': 'sarah@example.com'},
+            {'username': 'david_client', 'first_name': 'David', 'last_name': 'Brown', 'email': 'david@example.com'},
+            {'username': 'mary_client', 'first_name': 'Mary', 'last_name': 'Davis', 'email': 'mary@example.com'},
+            {'username': 'james_client', 'first_name': 'James', 'last_name': 'Wilson', 'email': 'james@example.com'},
+            {'username': 'patricia_client', 'first_name': 'Patricia', 'last_name': 'Moore', 'email': 'patricia@example.com'},
+            {'username': 'robert_client', 'first_name': 'Robert', 'last_name': 'Taylor', 'email': 'robert@example.com'},
+            {'username': 'linda_client', 'first_name': 'Linda', 'last_name': 'Anderson', 'email': 'linda@example.com'},
+            {'username': 'william_client', 'first_name': 'William', 'last_name': 'Thomas', 'email': 'william@example.com'},
+            {'username': 'barbara_client', 'first_name': 'Barbara', 'last_name': 'Jackson', 'email': 'barbara@example.com'},
+            {'username': 'richard_client', 'first_name': 'Richard', 'last_name': 'White', 'email': 'richard@example.com'},
+            {'username': 'susan_client', 'first_name': 'Susan', 'last_name': 'Harris', 'email': 'susan@example.com'},
+            {'username': 'joseph_client', 'first_name': 'Joseph', 'last_name': 'Martin', 'email': 'joseph@example.com'},
+            {'username': 'jessica_client', 'first_name': 'Jessica', 'last_name': 'Thompson', 'email': 'jessica@example.com'},
+            {'username': 'thomas_client', 'first_name': 'Thomas', 'last_name': 'Garcia', 'email': 'thomas@example.com'},
+            {'username': 'nancy_client', 'first_name': 'Nancy', 'last_name': 'Martinez', 'email': 'nancy@example.com'},
+            {'username': 'charles_client', 'first_name': 'Charles', 'last_name': 'Robinson', 'email': 'charles@example.com'},
+            {'username': 'betty_client', 'first_name': 'Betty', 'last_name': 'Clark', 'email': 'betty@example.com'}
         ]
 
         for client in client_data:
@@ -237,16 +241,43 @@ class Command(BaseCommand):
                 )
                 self.stdout.write(f'Created client: {client["username"]}')
 
-        # Create sample artisans
+        # Create sample artisans (multiple per category for more reviews)
         artisan_data = [
-            {'username': 'ahmed_plumber', 'first_name': 'Ahmed', 'last_name': 'Hassan', 'category': 'Plumbing', 'rate': 2500},
-            {'username': 'fatima_electrician', 'first_name': 'Fatima', 'last_name': 'Abdullahi', 'category': 'Electrical', 'rate': 3000},
-            {'username': 'kemi_hairdresser', 'first_name': 'Kemi', 'last_name': 'Adebayo', 'category': 'Hairdressing', 'rate': 1500},
-            {'username': 'ibrahim_mechanic', 'first_name': 'Ibrahim', 'last_name': 'Musa', 'category': 'Automotive', 'rate': 2000},
-            {'username': 'grace_teacher', 'first_name': 'Grace', 'last_name': 'Okoro', 'category': 'Home Teaching', 'rate': 2500},
+            # Carpentry artisans
             {'username': 'david_carpenter', 'first_name': 'David', 'last_name': 'Okonkwo', 'category': 'Carpentry', 'rate': 2200},
-            {'username': 'aisha_cleaner', 'first_name': 'Aisha', 'last_name': 'Bello', 'category': 'Cleaning', 'rate': 1200},
+            {'username': 'samuel_woodworker', 'first_name': 'Samuel', 'last_name': 'Adebayo', 'category': 'Carpentry', 'rate': 2800},
+            {'username': 'peter_furniture', 'first_name': 'Peter', 'last_name': 'Eze', 'category': 'Carpentry', 'rate': 3200},
+            {'username': 'jacob_custom', 'first_name': 'Jacob', 'last_name': 'Okoro', 'category': 'Carpentry', 'rate': 2500},
+            
+            # Electrical artisans
+            {'username': 'fatima_electrician', 'first_name': 'Fatima', 'last_name': 'Abdullahi', 'category': 'Electrical', 'rate': 3000},
+            {'username': 'ibrahim_wiring', 'first_name': 'Ibrahim', 'last_name': 'Hassan', 'category': 'Electrical', 'rate': 3500},
+            {'username': 'moses_power', 'first_name': 'Moses', 'last_name': 'Bello', 'category': 'Electrical', 'rate': 2800},
+            {'username': 'usman_solar', 'first_name': 'Usman', 'last_name': 'Ali', 'category': 'Electrical', 'rate': 4000},
+            
+            # Plumbing artisans
+            {'username': 'ahmed_plumber', 'first_name': 'Ahmed', 'last_name': 'Musa', 'category': 'Plumbing', 'rate': 2500},
+            {'username': 'aliyu_pipes', 'first_name': 'Aliyu', 'last_name': 'Garba', 'category': 'Plumbing', 'rate': 2700},
+            {'username': 'yusuf_water', 'first_name': 'Yusuf', 'last_name': 'Sani', 'category': 'Plumbing', 'rate': 3100},
+            {'username': 'haruna_drain', 'first_name': 'Haruna', 'last_name': 'Ibrahim', 'category': 'Plumbing', 'rate': 2400},
+            
+            # Painting artisans
             {'username': 'emeka_painter', 'first_name': 'Emeka', 'last_name': 'Nwosu', 'category': 'Painting', 'rate': 1800},
+            {'username': 'chidi_colors', 'first_name': 'Chidi', 'last_name': 'Okafor', 'category': 'Painting', 'rate': 2200},
+            {'username': 'daniel_brush', 'first_name': 'Daniel', 'last_name': 'Ugwu', 'category': 'Painting', 'rate': 2000},
+            {'username': 'anthony_decor', 'first_name': 'Anthony', 'last_name': 'Chukwu', 'category': 'Painting', 'rate': 2500},
+            
+            # Masonry artisans
+            {'username': 'abdul_mason', 'first_name': 'Abdul', 'last_name': 'Yusuf', 'category': 'Masonry', 'rate': 2600},
+            {'username': 'mohammed_brick', 'first_name': 'Mohammed', 'last_name': 'Umar', 'category': 'Masonry', 'rate': 3000},
+            {'username': 'suleiman_stone', 'first_name': 'Suleiman', 'last_name': 'Audu', 'category': 'Masonry', 'rate': 3400},
+            {'username': 'garba_concrete', 'first_name': 'Garba', 'last_name': 'Shehu', 'category': 'Masonry', 'rate': 2800},
+            
+            # Welding artisans
+            {'username': 'sunday_welder', 'first_name': 'Sunday', 'last_name': 'Ogbonna', 'category': 'Welding', 'rate': 3200},
+            {'username': 'godwin_metal', 'first_name': 'Godwin', 'last_name': 'Onyema', 'category': 'Welding', 'rate': 3600},
+            {'username': 'vincent_fab', 'first_name': 'Vincent', 'last_name': 'Nduka', 'category': 'Welding', 'rate': 4000},
+            {'username': 'frank_steel', 'first_name': 'Frank', 'last_name': 'Obi', 'category': 'Welding', 'rate': 3400},
         ]
 
         states = list(State.objects.all())
@@ -316,46 +347,73 @@ class Command(BaseCommand):
 
                 self.stdout.write(f'Artisan already exists: {artisan["username"]}')
 
-        # Create sample reviews
+        # Create sample reviews with diverse content
         clients = User.objects.filter(role='client')
         artisans = ArtisanProfile.objects.all()
 
         review_comments = [
-            'Excellent work! Very professional and timely.',
-            'Great service, would definitely recommend.',
-            'Good quality work at fair price.',
-            'Professional and reliable. Will hire again.',
-            'Outstanding service and attention to detail.',
-            'Quick response and excellent results.',
-            'Very satisfied with the quality of work.',
-            'Affordable and efficient service.',
+            'Excellent work! Very professional and delivered on time. Highly recommend!',
+            'Outstanding service with great attention to detail. Will definitely hire again.',
+            'Good quality work at a fair price. Professional and reliable.',
+            'Amazing craftsmanship! Exceeded my expectations completely.',
+            'Professional service from start to finish. Very satisfied with the results.',
+            'Quick response time and excellent problem-solving skills.',
+            'Very satisfied with the quality and professionalism shown.',
+            'Affordable pricing with excellent results. Great value for money.',
+            'Punctual, professional, and delivered exactly what was promised.',
+            'Excellent communication throughout the project. Highly skilled.',
+            'Beautiful work with superb finishing. Completely transformed our space.',
+            'Reliable service with top-notch quality. Worth every penny spent.',
+            'Creative solutions and expert execution. Truly impressive work.',
+            'Patient, thorough, and delivered exceptional results on time.',
+            'Professional approach with excellent customer service throughout.',
+            'High-quality materials used and excellent workmanship displayed.',
+            'Efficient service with great attention to safety and cleanliness.',
+            'Innovative approach and excellent technical skills demonstrated.',
+            'Dependable service with consistent quality delivery every time.',
+            'Expert knowledge with friendly and approachable customer service.',
         ]
 
         review_titles = [
-            'Great Service!',
-            'Highly Recommended',
-            'Professional Work',
-            'Excellent Results',
-            'Very Satisfied',
-            'Quality Service',
-            'Will Hire Again',
-            'Outstanding Work'
+            'Exceptional Service!',
+            'Highly Recommended Professional',
+            'Outstanding Quality Work',
+            'Excellent Results Delivered',
+            'Very Satisfied Customer',
+            'Top-Quality Craftsmanship',
+            'Professional Excellence',
+            'Amazing Transformation',
+            'Perfect Job Execution',
+            'Superb Professional Service',
+            'Great Value for Money',
+            'Exceeded Expectations',
+            'Reliable and Skilled',
+            'Beautiful Finished Work',
+            'Expert Level Service'
         ]
 
+        # Ensure each artisan gets multiple reviews
         for artisan in artisans:
-            # Create 1-5 random reviews for each artisan
-            num_reviews = random.randint(1, 5)
-            selected_clients = random.sample(list(clients), min(num_reviews, len(clients)))
+            # Create 8-12 reviews for each artisan to ensure good coverage
+            num_reviews = random.randint(8, 12)
+            available_clients = list(clients)
+            
+            # If we don't have enough clients, repeat some
+            if len(available_clients) < num_reviews:
+                selected_clients = available_clients * ((num_reviews // len(available_clients)) + 1)
+                selected_clients = selected_clients[:num_reviews]
+            else:
+                selected_clients = random.sample(available_clients, num_reviews)
 
             for client in selected_clients:
                 if not Review.objects.filter(client=client, artisan=artisan).exists():
                     Review.objects.create(
                         client=client,
                         artisan=artisan,
-                        rating=random.randint(3, 5),  # Generally good ratings
+                        rating=random.randint(3, 5),  # Generally positive ratings
                         title=random.choice(review_titles),
                         comment=random.choice(review_comments),
-                        would_recommend=random.choice([True, True, True, False])  # 75% would recommend
+                        would_recommend=random.choices([True, False], weights=[85, 15])[0]  # 85% would recommend
                     )
 
         # Create FAQs
