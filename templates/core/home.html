@@ -5,6 +5,8 @@
 <!-- Swiper CSS -->
 {% block extra_css %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<!-- Framer Motion CSS -->
+<script src="https://cdn.jsdelivr.net/npm/framer-motion@11.0.8/dist/framer-motion.js"></script>
 <style>
     .artisanSwiper {
         width: 100%;
@@ -18,62 +20,198 @@
     .artisanSwiper .swiper-wrapper {
         align-items: stretch;
     }
+    
+    /* Animation styles for hero section */
+    .hero-title {
+        transform: translateY(-20px);
+        opacity: 0;
+        animation: slideInDown 0.8s ease-out forwards;
+    }
+    
+    .hero-subtitle {
+        transform: translateX(-30px);
+        opacity: 0;
+        animation: slideInLeft 1s ease-out 0.3s forwards;
+    }
+    
+    .hero-buttons {
+        transform: translateY(30px);
+        opacity: 0;
+        animation: slideInUp 1s ease-out 0.6s forwards;
+    }
+    
+    .hero-card {
+        transform: scale(0.8) rotateY(10deg);
+        opacity: 0;
+        animation: scaleInRotate 1.2s ease-out 0.9s forwards;
+    }
+    
+    .floating-icon {
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    .bounce-icon {
+        animation: bounce 2s infinite;
+    }
+    
+    .spin-icon {
+        animation: spin 4s linear infinite;
+    }
+    
+    @keyframes slideInDown {
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideInLeft {
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideInUp {
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes scaleInRotate {
+        to {
+            transform: scale(1) rotateY(0deg);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes bounce {
+        0%, 20%, 53%, 80%, 100% { transform: translateY(0); }
+        40%, 43% { transform: translateY(-15px); }
+        70% { transform: translateY(-8px); }
+        90% { transform: translateY(-3px); }
+    }
+    
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    /* Pulse animation for buttons */
+    .pulse-button {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(101, 163, 13, 0.7); }
+        50% { box-shadow: 0 0 0 10px rgba(101, 163, 13, 0); }
+    }
+    
+    /* Background floating elements */
+    .bg-floating {
+        position: absolute;
+        opacity: 0.1;
+        animation: floatSlow 6s ease-in-out infinite;
+    }
+    
+    @keyframes floatSlow {
+        0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+        33% { transform: translate(30px, -30px) rotate(120deg); }
+        66% { transform: translate(-20px, 20px) rotate(240deg); }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
-<section class="bg-gradient-to-br from-navy to-blue-800 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+<section class="bg-gradient-to-br from-navy to-blue-800 text-white relative overflow-hidden">
+    <!-- Floating Background Elements -->
+    <div class="bg-floating top-10 left-10">
+        <i class="fas fa-tools text-6xl text-lime"></i>
+    </div>
+    <div class="bg-floating top-20 right-20">
+        <i class="fas fa-star text-4xl text-yellow-400"></i>
+    </div>
+    <div class="bg-floating bottom-20 left-1/4">
+        <i class="fas fa-cogs text-5xl text-lime"></i>
+    </div>
+    <div class="bg-floating bottom-32 right-1/3">
+        <i class="fas fa-wrench text-3xl text-white"></i>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-                <h1 class="text-4xl lg:text-6xl font-bold mb-6">
+                <h1 class="hero-title text-4xl lg:text-6xl font-bold mb-6">
                     Find & Hire
-                    <span class="text-lime">Verified</span>
+                    <span class="text-lime bounce-icon inline-block">Verified</span>
                     Local Artisans
                 </h1>
-                <p class="text-xl lg:text-2xl mb-8 text-gray-200">
+                <p class="hero-subtitle text-xl lg:text-2xl mb-8 text-gray-200">
                     Connect with trusted professionals for plumbing, electrical work,
                     hairdressing, mechanics, home tutoring, and more.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="{% url 'core:artisan_list' %}" class="bg-lime text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-light-lime transition inline-flex items-center justify-center">
-                        <i class="fas fa-search mr-2"></i>
+                <div class="hero-buttons flex flex-col sm:flex-row gap-4">
+                    <a href="{% url 'core:artisan_list' %}" class="pulse-button bg-lime text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-light-lime transition inline-flex items-center justify-center">
+                        <i class="fas fa-search mr-2 floating-icon"></i>
                         Find Artisans
                     </a>
                     <a href="{% url 'accounts:artisan_register' %}" class="border-2 border-white text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-navy transition inline-flex items-center justify-center">
-                        <i class="fas fa-user-plus mr-2"></i>
+                        <i class="fas fa-user-plus mr-2 bounce-icon"></i>
                         Join as Artisan
                     </a>
                 </div>
             </div>
 
             <div class="relative">
-                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-2xl">
+                <div class="hero-card bg-white dark:bg-gray-800 rounded-lg p-6 shadow-2xl">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <i class="fas fa-star text-yellow-400 mr-1 spin-icon"></i>
                         <span class="text-navy dark:text-lime font-semibold">{{ total_artisans }}+ Verified Artisans</span>
                     </div>
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-tools text-lime mr-2"></i>
+                        <i class="fas fa-tools text-lime mr-2 bounce-icon"></i>
                         <span class="text-navy dark:text-lime font-semibold">{{ total_categories }}+ Service Categories</span>
                     </div>
                     <div class="text-navy dark:text-gray-100">
                         <h3 class="font-bold text-lg mb-2">Why Choose Us?</h3>
                         <ul class="space-y-2">
                             <li class="flex items-center">
-                                <i class="fas fa-check text-lime mr-2"></i>
+                                <i class="fas fa-check text-lime mr-2 floating-icon"></i>
                                 <span>Verified & Background Checked</span>
                             </li>
                             <li class="flex items-center">
-                                <i class="fas fa-check text-lime mr-2"></i>
+                                <i class="fas fa-check text-lime mr-2 floating-icon"></i>
                                 <span>Local Professionals</span>
                             </li>
                             <li class="flex items-center">
-                                <i class="fas fa-check text-lime mr-2"></i>
+                                <i class="fas fa-check text-lime mr-2 floating-icon"></i>
                                 <span>Competitive Prices</span>
                             </li>
                         </ul>
+                    </div>
+                </div>
+                
+                <!-- Floating decorative elements around the card -->
+                <div class="absolute -top-4 -right-4 animate-bounce">
+                    <div class="bg-lime rounded-full p-3">
+                        <i class="fas fa-hammer text-white text-xl"></i>
+                    </div>
+                </div>
+                <div class="absolute -bottom-4 -left-4 floating-icon">
+                    <div class="bg-yellow-400 rounded-full p-3">
+                        <i class="fas fa-lightbulb text-white text-xl"></i>
+                    </div>
+                </div>
+                <div class="absolute top-1/2 -right-8 spin-icon">
+                    <div class="bg-blue-500 rounded-full p-2">
+                        <i class="fas fa-cog text-white"></i>
                     </div>
                 </div>
             </div>
